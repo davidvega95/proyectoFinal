@@ -1,0 +1,98 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Productos
+ *
+ * @ORM\Table(name="productos", indexes={@ORM\Index(name="fk_productos_EstadoProducto1_idx", columns={"EstadoProducto_idEstadoProducto"}), @ORM\Index(name="fk_productos_CategoriaProductos1_idx", columns={"CategoriaProductos_idCategoriaProductos"}), @ORM\Index(name="fk_productos_usuarios1_idx", columns={"usuarios_idusuarios"})})
+ * @ORM\Entity
+ */
+class Productos
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="idproductos", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idproductos;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="precio", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $precio;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombre", type="string", length=100, nullable=false)
+     */
+    private $nombre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="descripcion", type="string", length=300, nullable=true)
+     */
+    private $descripcion;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="foto", type="blob", nullable=false)
+     */
+    private $foto;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="Ubicacion", type="string", length=45, nullable=true)
+     */
+    private $ubicacion;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="FechaPublicacion", type="datetime", nullable=false)
+     */
+    private $fechapublicacion;
+
+    /**
+     * @var \Categoriaproductos
+     *
+     * @ORM\ManyToOne(targetEntity="Categoriaproductos")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="CategoriaProductos_idCategoriaProductos", referencedColumnName="idCategoriaProductos")
+     * })
+     */
+    private $categoriaproductoscategoriaproductos;
+
+    /**
+     * @var \Estadoproducto
+     *
+     * @ORM\ManyToOne(targetEntity="Estadoproducto")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="EstadoProducto_idEstadoProducto", referencedColumnName="idEstadoProducto")
+     * })
+     */
+    private $estadoproductoestadoproducto;
+
+    /**
+     * @var \Usuarios
+     *
+     * @ORM\ManyToOne(targetEntity="Usuarios")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="usuarios_idusuarios", referencedColumnName="idusuarios")
+     * })
+     */
+    private $usuariosusuarios;
+
+
+}
+

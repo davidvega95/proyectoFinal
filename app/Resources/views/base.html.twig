@@ -3,11 +3,85 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        {% block stylesheets %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        {# asset hace referencia a la carpeta web #}
+
+       
+       
+        {#<script src="{{ asset('js/bootstrap.min.js') }}" type="text/javascript"></script> #}
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+      
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="{{ asset('js/popper.js') }}"></script> 
+        <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script> 
+        <script src="{{ asset('js/getCategoriaProductos.js') }}"></script> 
+        
+        <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBiLcaWOJ87V98SmugllQ4p4S0mt9QpLgo
+        "></script>
+        
+         
+        
+        
+        
+
+        <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('css/estilo.css') }}" />  
+       
+        {% endblock %}
+        
+        
     </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+    <!-- Aqui va  a ser  donde vamos a poner la cabecera de la aplicación-->
+    <!--Se tiene que llamar header porque el body ya lo estamos llamando en otros ficheros-->
+    {% block header %}
+    <!--Llamamo al html de la cabecera-->
+    {% include "cabecera.html.twig" %}
+    
+
+        {% endblock %}
+       
+        
+          
+        <!--En este bloque va  a ser donde va a llamar a sus fichero correspondientes-->
+        {% block body %}
+        <div class="container">
+                
+                {% for producto in productos %}
+                <div class="productos">
+                    <img width="200" height="200" src="data:image/jpeg;base64,{{imagenCod[producto.idproductos]}}"/></br>
+                    <span class="precio">{{producto.precio}}€</span></br>
+                    <span class="nombre">{{producto.nombre}}</span></br>
+                    <span class="nombre">{{producto.descripcion}}</span></br>
+                    <a class="escribir btn btn-info" href="{{url("imagen",{"id":producto.idproductos})}}">Escribir</a>
+                    <a class="ver btn btn-success" href="{{url("imagen",{"id":producto.idproductos})}}">Ver producto</a>
+                    <hr>
+                    <a  href="{{url("usuario",{"id":producto.usuariosusuarios.idusuarios})}}">
+                    <div class="usuarios_producto">
+                        <div class="foto_usuario" style="background-image: url('data:image/jpeg;base64,{{imagenCod1[producto.usuariosusuarios.idusuarios] }}'
+                        )">
+
+            
+                        </div>
+                        <span class="nombre_usuario">{{producto.usuariosusuarios.nombre}}</span>
+                    </div>
+                </a>
+                    
+                </div>
+                    {% endfor %}
+
+                
+            
+           
+        </div>
+            
+        
+        {% endblock %}
+             
+
+        {% block javascripts %}
+       
+        
+   {#     <script src="{{ asset('assets/js/custom/common.js') }}"></script>#}
+        {% endblock %}
+            
 </html>

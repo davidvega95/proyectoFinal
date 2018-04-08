@@ -1,0 +1,67 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Mensajes
+ *
+ * @ORM\Table(name="mensajes", indexes={@ORM\Index(name="fk_mensajes_usuarios2_idx", columns={"usuarios_idusuarios"}), @ORM\Index(name="fk_mensajes_usuarios1_idx", columns={"usuarios_idusuarios1"})})
+ * @ORM\Entity
+ */
+class Mensajes
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="idmensajes", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idmensajes;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="mensaje", type="string", length=200, nullable=false)
+     */
+    private $mensaje;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="leido", type="boolean", nullable=false)
+     */
+    private $leido;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="creado", type="datetime", nullable=false)
+     */
+    private $creado;
+
+    /**
+     * @var \Usuarios
+     *
+     * @ORM\ManyToOne(targetEntity="Usuarios")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="usuarios_idusuarios1", referencedColumnName="idusuarios")
+     * })
+     */
+    private $usuariosusuarios1;
+
+    /**
+     * @var \Usuarios
+     *
+     * @ORM\ManyToOne(targetEntity="Usuarios")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="usuarios_idusuarios", referencedColumnName="idusuarios")
+     * })
+     */
+    private $usuariosusuarios;
+
+
+}
+

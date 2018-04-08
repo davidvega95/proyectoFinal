@@ -1,0 +1,33 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Estadoproducto
+ *
+ * @ORM\Table(name="estadoproducto")
+ * @ORM\Entity
+ */
+class Estadoproducto
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="idEstadoProducto", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idestadoproducto;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombre", type="string", length=100, nullable=false)
+     */
+    private $nombre;
+
+
+}
+

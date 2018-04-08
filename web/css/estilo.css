@@ -1,0 +1,143 @@
+* {
+  box-sizing: border-box;
+}
+
+html,body{
+  margin:0px;
+  padding:0px;
+   
+  
+}
+
+.productos {
+  
+  padding: 20px;
+  float: left;
+  width: 33.33%;
+  height: 500px;
+  margin: auto;
+  border: 2px solid red;
+  
+  border-radius: 25px;
+   font-weight: 900;
+   font-size: 20px;
+}
+
+.producto {
+  
+  padding: 20px;
+  float: left;
+  width: 33.33%;
+  height: 500px;
+  margin: auto;
+  border: 2px solid red;
+  
+  border-radius: 25px;
+   font-weight: 900;
+   font-size: 20px;
+}
+
+.precio{
+  color:#669999;
+
+}
+.detalle_precio{
+  color:#669999;
+  font-size: 40px;
+
+}
+
+.escribir{
+  margin-top: 20px;
+  text-align: center;
+}
+
+.ver{
+  margin-top: 20px;
+  text-align: center;
+}
+.container{
+  display: table;
+}
+
+@media (max-width:1000px) {
+  .productos {
+      width: 50%;
+  }
+  .producto {
+    width: 50%;
+}
+}
+
+@media (max-width:500px) {
+  .productos {
+      width: 100%;
+  }
+  .producto {
+    width: 100%;
+}
+}
+
+div.foto_usuario {
+  /* cambia estos dos valores para definir el tamaño de tu círculo */
+  height: 80px;
+  width: 80px;
+  /* los siguientes valores son independientes del tamaño del círculo */
+  background-repeat: no-repeat;
+  background-position: 50%;
+  border-radius: 50%;
+  background-size: 100% auto;
+  display: inline-block;
+}
+
+.nombre_usuario{
+  
+  
+}
+.usuarios_producto{
+  margin-top: 10px;
+}
+.usuarios_producto:hover{
+  text-decoration: none;
+  background-color:#999999;
+  
+
+}
+.producto:hover{
+  text-decoration: none;
+  background-color:#999999;
+
+}
+
+.nombreUsuario{
+  color:black;
+  font-weight:bold;
+  text-transform: uppercase;
+  float: top;
+}
+
+.info_usuario{
+  border: 2px solid red;
+}
+
+.numero_productos{
+  display: inline-block;
+  margin-left: 40px;
+
+}
+.chat_usuario{
+  float: right;
+  margin: 10px;
+}
+.detalle_body{
+  width: 50%;
+  margin-left:300px;
+  
+
+}
+
+.imagen>img{
+  width:50%;
+  
+  padding: 5px;
+}

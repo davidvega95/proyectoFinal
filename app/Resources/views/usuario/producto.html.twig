@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<div class=" detalle_body container">
+    <h1>Detalle del producto</h1>
+        <div class="info_usuario">
+                <div class="foto_usuario" style="background-image: url('data:image/jpeg;base64,{{imagenCod1[usuario.idusuarios] }}'
+                )">
+               
+        </div>
+        <span class="nombreUsuario">{{usuario.nombre}}</span>
+        <div class="numero_productos">
+            <span>{{numProductosUsuario[0][1]}}</span>
+            <span>Productos</span>
+        </div>
+        <button type="button" class=" chat_usuario btn btn-info">chat</button>
+
+    </div>
+    <div class="imagen">
+    <img src="data:image/jpeg;base64,{{imagenCod2[producto.idproductos]}}"/></br>
+    </div>
+    <div>
+    <span class="detalle_precio">{{producto.precio}} €</span>
+    </div>
+    <h1>{{producto.nombre}}</h1>
+    <hr>
+    <p>{{producto.descripcion}}</p><hr>
+    <div class="fecha_publicacion">
+        {{producto.fechapublicacion.date}}
+    </div>
+    <div class="ubicacion">
+        <h1>Aqui la ubiación</h1>
+    </div>
+    </div>
+
+
+{% endblock %}

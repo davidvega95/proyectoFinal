@@ -63,6 +63,17 @@ class Mensajes
     private $usuariosusuarios;
 
 
+    /**
+     * @var \Conversaciones
+     *
+     * @ORM\ManyToOne(targetEntity="Conversaciones")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="fk_id_conversaciones", referencedColumnName="id_conversaciones")
+     * })
+     */
+    private $conversaciones;
+
+
 
     /**
      * Get idmensajes
@@ -192,5 +203,30 @@ class Mensajes
     public function getUsuariosusuarios()
     {
         return $this->usuariosusuarios;
+    }
+
+
+     /**
+     * Set conversaciones1
+     *
+     * @param \AppBundle\Entity\Conversaciones $conversaciones
+     *
+     * @return Mensajes
+     */
+    public function setConversaciones(\AppBundle\Entity\Conversaciones $conversaciones = null)
+    {
+        $this->conversaciones = $conversaciones;
+
+        return $this;
+    }
+
+    /**
+     * Get conversaciones
+     *
+     * @return \AppBundle\Entity\Conversaciones
+     */
+    public function getConversaciones()
+    {
+        return $this->conversaciones;
     }
 }

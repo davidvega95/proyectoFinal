@@ -1,8 +1,9 @@
 <?php
 
 namespace AppBundle\Entity;
-
+use Serializable;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Usuarios
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="usuarios", uniqueConstraints={@ORM\UniqueConstraint(name="idusuarios_UNIQUE", columns={"idusuarios"})})
  * @ORM\Entity
  */
-class Usuarios
+class Usuarios implements UserInterface, Serializable
 {
     /**
      * @var integer
@@ -28,12 +29,25 @@ class Usuarios
      */
     private $nombre;
 
+
     /**
      * @var string
      *
      * @ORM\Column(name="Apellidos", type="string", length=100, nullable=false)
      */
     private $apellidos;
+
+    //Con que nos vamos a registrar
+    public function getUsername()
+    {
+        return $this->email;
+    }
+
+    //Roles
+    public function getRoles()
+    {
+        return array('ROLE_USER', 'ROLE_ADMIN');
+    }
 
     /**
      * @var string
@@ -309,4 +323,25 @@ class Usuarios
     public function __toString() {
         return $this->nombre;
     }
+    public function getSalt()
+    {
+        return null;
+    }
+
+    public function eraseCredentials()
+    {
+
+    }
+    public function serialize(){
+        return serialize(array($this->idusuarios,$this->email,$this->password));
+    }
+
+    public function unserialize($serialized){
+        list($this->idusuarios,$this->email,$this->password)=unserialize($serialized);
+    }
+
+   
+    
+    
+   
 }

@@ -5,6 +5,13 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+        
+        
         {# asset hace referencia a la carpeta web #}
 
        
@@ -26,7 +33,7 @@
         
 
         <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('css/estilo.css') }}" />  
-       
+       <link rel="stylesheet" href="{{ asset('css/menuVertical.css') }}"
         {% endblock %}
         
         
@@ -45,16 +52,20 @@
         <!--En este bloque va  a ser donde va a llamar a sus fichero correspondientes-->
         {% block body %}
         <div class="container">
+    
                 
                 {% for producto in productos %}
-                <div class="productos">
+                
+                <div class="producto{{producto.idproductos}}">
+                        <a class="detalle_producto" href="{{url("detalle_producto",{"id_producto":producto.idproductos,"id_usuario":producto.usuariosusuarios.idusuarios})}}">
                     <img width="200" height="200" src="data:image/jpeg;base64,{{imagenCod[producto.idproductos]}}"/></br>
                     <span class="precio">{{producto.precio}}€</span></br>
-                    <span class="nombre">{{producto.nombre}}</span></br>
-                    <span class="nombre">{{producto.descripcion}}</span></br>
-                    <a class="escribir btn btn-info" href="{{url("imagen",{"id":producto.idproductos})}}">Escribir</a>
+                    <span class="nombre" id="{{producto.nombre}}">{{producto.nombre}}</span></br>
+                    <span class="descripcion">{{producto.descripcion}}</span></br>
+                    <a class="escribir btn btn-info" href="{{url("chat",{"idProducto":producto.idproductos,"idUsuario":producto.usuariosusuarios.idusuarios})}}">Escribir</a>
                     <a class="ver btn btn-success" href="{{url("imagen",{"id":producto.idproductos})}}">Ver producto</a>
                     <hr>
+                </a>
                     <a  href="{{url("usuario",{"id":producto.usuariosusuarios.idusuarios})}}">
                     <div class="usuarios_producto">
                         <div class="foto_usuario" style="background-image: url('data:image/jpeg;base64,{{imagenCod1[producto.usuariosusuarios.idusuarios] }}'

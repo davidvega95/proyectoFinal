@@ -1,0 +1,19 @@
+{% extends "base.html.twig" %}
+{% block body %}
+    <div class="col-lg-4 box-form">
+        <h2>Identificarse</h2>
+        <hr/>
+        {% if error %}
+            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+        <form action="{{path('login_check')}}" method="POST">
+            <label>Email</label>
+            <input type="text" id="_username" name="_username"  class="form-control">
+
+            <label>Contraseña</label>
+            <input type="password" id="_password" name="_password" class="form-control">
+            <input type="submit" value="Entrar" class="btn btn-success"/>
+            
+        </form>
+    </div>
+{% endblock %}

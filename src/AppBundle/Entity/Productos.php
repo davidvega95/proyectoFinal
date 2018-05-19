@@ -106,6 +106,13 @@ class Productos
         return $this->idproductos;
     }
 
+    public function setIdproductos($idproductos)
+    {
+        $this->idproductos = $idproductos;
+
+        return $this;
+    }
+
     /**
      * Set precio
      *

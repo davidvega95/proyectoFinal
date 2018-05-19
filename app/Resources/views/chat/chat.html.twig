@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<main>
+    
+    <div class="content-menu">
+        <li onclick="abrirDiv1()"><span class="lnr lnr-home icon1"></span><h4 class="text1">PERFIL</h4></li>
+        <li onclick="abrirDiv2()"><span class="lnr film-play icon2"></span>
+            <a href=" {{path('paginaPrincipal') }}"  class="text2">PRODUCTOS</a></li>
+        </li>
+        <li><span class="lnr lnr-store icon3"></span>
+            <a href=" {{path('chat', {'idProducto': conversaciones[0].idproductos,'idUsuario': conversaciones[0].idusuarios}) }}"  class="text3">MENSAJES</a></li>
+        <li onclick="abrirDiv4()"><span class="lnr lnr-picture icon4"></span><h4  class="text4">FAVORITOS</h4></li>
+        
+        
+        
+    </div>
+    <div class="contenedorChat" style="display:inline-block">
+        <div class="lista">
+            {% if conversaciones is defined %}
+            
+            {% for conversacion in conversaciones %}
+            <div id="conversacion{{conversacion.idconversaciones}}">
+                <img width="100" height="100" src="data:image/jpeg;base64,{{imagenCod[conversacion.idproductos]}}"/>  
+                <span>{{conversacion.descripcion}}</span>
+                <span>{{conversacion.nombre}}</span>
+             </div>  
+            {% endfor %}
+        </div>
+        
+        </div>
+        <div id="contenedor">
+                <div id="caja-chat">
+                    <div id="chat">
+                        <div id="datos-chat">
+                         {% for mensaje in mensajes %}
+                         <div id="{{mensaje.idmensajes}}">
+                            <span name="nombreUsuario" style="color:#1c62c4;">{{mensaje.nombre}}</span>
+                            <span name="mensaje" style="color:#848484;">{{mensaje.mensaje}}</span>
+                            <span name="hora" style="float:right;">10:04 am</span>
+                        </div>
+                            
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {{ form_start(form) }}
+                {{ form_errors(form) }}
+            
+                {{ form_widget(form) }}
+               
+            
+                
+            {{ form_end(form) }}
+            <form name="formulario" id="{{conversaciones[0].idproductos}}">
+                <label>Mensaje</label>
+                <input name="mensaje" id="mensaje">
+                <input type="button" id="enviarMensaje{{conversaciones[0].idconversaciones}}" value="enviar">
+            </form>
+                
+    
+            </div>
+        {% endif %}
+
+           
+
+            
+            
+        
+        
+</main>
+
+
+
+
+{% endblock %}

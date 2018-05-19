@@ -1,4 +1,8 @@
  <!--Llamamo al html de la cabecera-->
+ {% if categorias is defined %}
+  <!--Cuando se loguea el usuario-->
+ 
+ 
  <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">Thinder</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -12,8 +16,10 @@
         </li>
         
         <li class="nav-item">
-          <select id="categoriasServ">
+          <select name="categoria" id="categoriasServ">
+            <option value="0">--Elige categoria--</option>
               {% for categoria in categorias %}
+
               <option value="{{categoria.idCategoriaProductos}}">{{categoria.nombre}}</option>
               {% endfor %}
             
@@ -21,7 +27,7 @@
         </li>
         
         <form class="form-inline my-2 my-lg-0">
-            <input id="buscar"  class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <input  id="buscar"  class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
             <button onclick="buscarProducto()" class="btn btn-outline-success my-2 my-sm-0" type="button">Search</button>
           </form>
       </ul>
@@ -29,9 +35,20 @@
         <li class="nav-item active">
           <a class="btn btn-success" href="#">Mensajes <span class="sr-only">(current)</span></a>
         </li>
+        
         <li class="nav-item">
-          <a class="btn btn-success" href="#">Registrate o inicia sesion</a>
+            {% if app.user %}
+            <h1>{{ app.user.username }}</h1>
+            <a type="button" href="{{ path('paginaPrincipal') }}" class="btn btn-primary">
+                Mi zona
+            </a>
+           {% else %}
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                Regístrate o inicia sesión
+              </button>
+              {% endif %}
         </li>
+       
         <li class="nav-item">
             <a class="btn btn-success" href="#">Subir producto</a>
           </li>
@@ -39,3 +56,86 @@
       </ul>
     </div>
   </nav>
+  <!-- Modal para inicia sesión -->
+  <div class="modal fade" id="myModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+        
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">Registrate o inicia sesión</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          
+          <!-- Modal body -->
+          <div class="modal-body">
+            <button type="button" id="registrarse" onclick="formRegistro()">Regístrate</button>
+
+            <button type="button" style="display:none;" id="atras" onclick="volverAtras()">Atras</button>
+            
+            <button type="button" id="sesion" onclick="formSesion()">Inicia sesion</button>
+            <div class="form" style="display:none;">
+                <div class="col-lg-4 box-form">
+                  <h2>Identificarse</h2>
+                  <hr/>
+                  {% if error is defined %}
+                      <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                  {% endif %}
+                  <form action="{{path('catServicio')}}" method="POST">
+                      <label>Email</label>
+                      <input type="text" id="_username" name="_username"  class="form-control">
+          
+                      <label>Contraseña</label>
+                      <input type="password" id="_password" name="_password" class="form-control">
+                      <input type="submit" value="Entrar" class="btn btn-success"/>
+                      
+                  </form>
+              </div>
+              </div>
+              {% if formRegistro is defined %}
+              <div class="formRegistro" style="display:none;">
+                  {{ form_start(formRegistro, {'attr': {'novalidate': 'novalidate'}}) }}
+                  <div class="form-group">
+                      {{ form_label(formRegistro.Nombre, 'Nombre: ') }}
+                      {{ form_widget(formRegistro.Nombre, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(formRegistro.Apellidos, 'Apellidos: ') }}
+                        {{ form_widget(formRegistro.Apellidos, {'attr': {'class': 'form-control'}}) }}
+                      </div>
+                      <div class="form-group">
+                          {{ form_label(formRegistro.email, 'Email: ') }}
+                          {{ form_widget(formRegistro.email, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(formRegistro.password, 'password: ') }}
+                            {{ form_widget(formRegistro.password, {'attr': {'class': 'form-control'}}) }}
+                          </div>
+
+                          <div class="form-group">
+                              {{ form_label(formRegistro.nick, 'nick: ') }}
+                              {{ form_widget(formRegistro.nick, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(formRegistro.FechaNac, 'fecha Nacimiento: ') }}
+                                {{ form_widget(formRegistro.FechaNac, {'attr': {'class': 'form-control'}}) }}
+                              </div>
+                  
+                  {{ form_end(formRegistro) }}
+              </div>
+              {% endif %}
+          </div>
+          
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+   {% endif %}
+    
+  

@@ -1,0 +1,127 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<main>
+    
+    <div class="content-menu">
+        <li onclick="abrirDiv1()"><span class="lnr lnr-home icon1"></span><h4 class="text1">PERFIL</h4></li>
+        <li onclick="abrirDiv2()"><span class="lnr film-play icon2"></span><h4 class="text2">PRODUCTOS</h4></li>
+        <li><span class="lnr lnr-store icon3"></span>
+            <a href=" {{path('chatPrincipal',{'idUsuario':productos[0].usuariosusuarios.idusuarios})}}"  class="text3">MENSAJES</a></li>
+        <li onclick="abrirDiv4()"><span class="lnr lnr-picture icon4"></span><h4  class="text4">FAVORITOS</h4></li>
+        
+        
+        
+    </div>
+    <div class="container_uno">
+            <h1>Perfil</h1>
+        </div>
+        <div class="container_dos">
+            <div class="titulo">
+                <h3>Tus Productos</h3>
+            </div>
+            <div class="parrafo1">
+                <p>Aqui podrás subir tus productos,gestionar los que ya tienes y destacarlos para venderlos antes</p>
+            </div>
+            <div class="numeroProductos">
+                <p>{{numeroProductos[0][1]}} Productos</p>
+            </div>
+
+            <div class="topnav">
+                    <a id="publicados" class="active" onclick=" activarTabsPublicados()">PUBICADOS</a>
+                    <a id="vendidos" onclick=" activarTabsVendidos()">VENDIDOS</a>
+                    
+            </div>
+            <div class="publicadosPro">
+                <table class="table">
+                    <tr>
+                        <td colspan="5">
+                        <button id="nuevoProducto">Subir un producto más a mi catálogo</button>
+                        </td>
+                        
+                    </tr>
+                    {% for producto in productos %}
+                    <tr>
+                        <td><input type="checkbox" class="form-check-input" id="checkbox{{producto.idproductos}}" style="display:none"></td>
+                        <td><img width="200" height="200" src="data:image/jpeg;base64,{{imagenCod[producto.idproductos]}}"/></td>
+                        <td>{{producto.precio}}€</td>
+                        <td>{{producto.nombre}}</td>
+                        <td><button id="formEditar{{producto.idproductos}}" type="button" class="btn btn-info">Editar</button></td>
+                        <td><button id="formBorrar{{producto.idproductos}}" type="button" class="btn btn-danger">Borrar</button></td>
+                    </tr>
+                    {% endfor %}
+                
+                </table>
+
+            </div>
+            <div id="vendidosPro" style="display:none">
+                    <table class="table">
+                           
+                            {% for producto in productosV %}
+                            <tr>
+                                <td><input type="checkbox" class="form-check-input" id="checkbox{{producto.idproductos}}" style="display:none"></td>
+                                <td><img width="200" height="200" src="data:image/jpeg;base64,{{imagenCodV[producto.idproductos]}}"/></td>
+                                <td>{{producto.precio}}€</td>
+                                <td>{{producto.nombre}}</td>
+                                
+                                <td><button id="formBorrar{{producto.idproductos}}" type="button" class="btn btn-danger">Borrar</button></td>
+                            </tr>
+                            {% endfor %}
+                        
+                        </table>
+
+            </div>
+            </div>
+
+            <!-- Formulario para editar -->
+            <div class="formularioEdicionPro">
+                <h1>Formulario a editar</h1>
+            <!--    <form  action="" method="POST">
+                    <label>¿Que estas vendiendo?</label>
+                    <input type="text" id="nombre" value=""><br>
+                    <label>precio</label>
+                    <input type="text" id="precio" value="">
+                    <label>categoria</label>
+                    <input type="text" id="categoria" value="">
+                    <label>descripcion</label>
+                    <input type="text" id="descripcion" value=""><br>
+                    <input type="submit" value="enviar">
+                </form> -->
+                {{ form_start(formEditarPro) }}
+                {{ form_errors(formEditarPro) }}
+            
+                {{ form_widget(formEditarPro) }}
+               
+            
+                
+            {{ form_end(formEditarPro) }}
+            </div>
+
+            <div class="formularioNuevoProducto">
+                <h1>Nuevo Producto</h1>
+                {{ form_start(formNuevoProducto) }}
+                {{ form_errors(formNuevoProducto) }}
+            
+                {{ form_widget(formNuevoProducto) }}
+               
+            
+                
+            {{ form_end(formNuevoProducto) }}
+            </div>
+            <!-- Div para el borrar -->
+            <div id="borrar" style="display:none">
+                <span id="nombre"> </span>
+                <input type="submit" id="borrar_productos" class="btn btn-danger" value="borrar">
+            </div>
+        <div class="container_tres">
+                    <a>mensajes</h1>
+        </div>
+        <div class="container_cuatro">
+                        <h1>Opiniones</h1>
+            </div>
+</main>
+
+
+
+
+{% endblock %}

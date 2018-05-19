@@ -9,7 +9,7 @@ html,body{
   
 }
 
-.productos {
+div[class^='producto'] {
   
   padding: 20px;
   float: left;
@@ -23,7 +23,7 @@ html,body{
    font-size: 20px;
 }
 
-.producto {
+div[class^='producto'] {
   
   padding: 20px;
   float: left;
@@ -103,7 +103,7 @@ div.foto_usuario {
   
 
 }
-.producto:hover{
+div[class^='producto']:hover{
   text-decoration: none;
   background-color:#999999;
 
@@ -140,4 +140,8 @@ div.foto_usuario {
   width:50%;
   
   padding: 5px;
+}
+
+.detalle_producto:hover{
+  text-decoration: none;
 }

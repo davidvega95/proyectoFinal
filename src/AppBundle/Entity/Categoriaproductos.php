@@ -40,6 +40,13 @@ class Categoriaproductos
         return $this->idcategoriaproductos;
     }
 
+    public function setIdcategoriaproductos($idcategoriaproductos)
+    {
+        $this->idcategoriaproductos = $idcategoriaproductos;
+        
+        return $this;
+    }
+
     /**
      * Set nombre
      *

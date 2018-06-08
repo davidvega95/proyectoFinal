@@ -1,0 +1,133 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<main>
+    
+    <div class="content-menu">
+        <li><span class="lnr lnr-store icon3"></span>
+            <a href=" {{path('perfil')}}"  class="text3">PERFIL</a></li>
+        <li><span class="lnr lnr-store icon3"></span>
+            <a href=" {{path('paginaPrincipal')}}"  class="text3">PRODUCTOS</a></li>
+            {% if productos[0] is defined %}
+            <li><span class="lnr lnr-store icon3"></span>
+                
+                <a href=" {{path('chatPrincipal',{'idUsuario':productos[0].usuariosusuarios.idusuarios})}}"  class="text3">MENSAJES</a></li>
+                {% endif %}
+        <li onclick="abrirDiv4()"><span class="lnr lnr-picture icon4"></span><h4  class="text4">FAVORITOS</h4></li>
+        {% if app.user.rolesroles[0]=="Admin" %}
+        <li><span class="lnr lnr-home icon1"></span><h4 class="text4">
+                <a href=" {{path('gestionUsuarios')}}"  class="text4">Gestión Usuarios</a>    
+        
+        </li>
+        <li><span class="lnr lnr-home icon1"></span><h4 class="text1">
+            <a href=" {{path('gestionCategorias')}}"  class="text3">Gestión Categorias</a>    
+    
+         </li>
+        
+        {% endif %}
+        
+        
+    </div>
+
+    <div class="container_cinco">
+            <div class="titulo">
+                <h3>Tus Usuarios</h3>
+            </div>
+            <div class="parrafo1">
+                <p>Aqui podrás subir tus usuarios</p>
+            </div>
+            
+
+            <div class="publicadosPro">
+                <table class="table">
+                    <tr>
+                        <td colspan="5">
+                        <button id="nuevoUsuario">Subir un usuario más a la base de datos</button>
+                        </td>
+                        
+                    </tr>
+                    {% for usuario in usuarios %}
+                    <tr>
+                        <td><input type="checkbox" class="form-check-input" id="checkbox{{usuario.idusuarios}}" style="display:none"></td>
+                        {% if usuario.foto is not null %}
+                        <td><img width="200" height="200" src="data:image/jpeg;base64,{{imagenCod1[usuario.idusuarios]}}"/></td>
+                        {% else %}
+                        <td>sin imagen</td>
+                        {% endif %}
+                        <td>{{usuario.nombre}}</td>
+                        <td>{{usuario.apellidos}}</td>
+                        <td>{{usuario.nick}}</td>
+                        <td>{{usuario.email}}</td>
+                        
+                        <td><button id="EditarU{{usuario.idusuarios}}" type="button" class="btn btn-info">Editar</button></td>
+                        <td><button id="formBorrarU{{usuario.idusuarios}}" type="button" class="btn btn-danger">Borrar</button></td>
+                    </tr>
+                    {% endfor %}
+                
+                </table>
+
+            </div>
+        
+            </div>
+
+            <div class="formularioNuevoUsuario" style="display:none">
+                    <h1>Nuevo Usuario</h1>
+                    {{ form_start(formNuevoUsuario) }}
+                    {{ form_errors(formNuevoUsuario) }}
+                
+                    {{ form_widget(formNuevoUsuario) }}
+                   
+                
+                    
+                {{ form_end(formNuevoUsuario) }}
+
+
+            </div>
+
+            <div class="formularioEdicionUsuario" style="display:none">
+                    <h1>Formulario a editar</h1>
+                <!--    <form  action="" method="POST">
+                        <label>¿Que estas vendiendo?</label>
+                        <input type="text" id="nombre" value=""><br>
+                        <label>precio</label>
+                        <input type="text" id="precio" value="">
+                        <label>categoria</label>
+                        <input type="text" id="categoria" value="">
+                        <label>descripcion</label>
+                        <input type="text" id="descripcion" value=""><br>
+                        <input type="submit" value="enviar">
+                    </form> -->
+                    {{ form_start(formEditarUsu) }}
+
+
+                    {{ form_errors(formEditarUsu) }}
+                    {{ form_widget(formEditarUsu.idusuarios, {'attr': {'class': 'idusuarios'}}) }}
+                    {{ form_widget(formEditarUsu.nombre, {'attr': {'class': 'nombre'}}) }}
+                    {{ form_widget(formEditarUsu.apellidos, {'attr': {'class': 'apellidos'}}) }}
+                    {{ form_widget(formEditarUsu.email, {'attr': {'class': 'email'}}) }}
+                    {{ form_widget(formEditarUsu.nick, {'attr': {'class': 'nick'}}) }}
+                    {{ form_widget(formEditarUsu.fechanac, {'attr': {'class': 'fechanac'}}) }}
+                    {{ form_widget(formEditarUsu.password, {'attr': {'class': 'password'}}) }}
+                    
+
+                    {{ form_widget(formEditarUsu.actualizar) }}
+                   
+                
+                    
+                {{ form_end(formEditarUsu) }}
+                </div>
+
+                <!-- Div para el borrar -->
+            <div id="borrar" style="display:none">
+                <span id="nombreC"> </span>
+                <input type="submit" id="borrar_usuarios" class="btn btn-danger" value="borrar">
+            </div>
+    
+
+           
+</main>
+
+
+
+
+{% endblock %}

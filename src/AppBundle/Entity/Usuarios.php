@@ -118,6 +118,13 @@ class Usuarios implements UserInterface, Serializable
         return $this->idusuarios;
     }
 
+    public function setIdusuarios($idusuario)
+    {
+        $this->idusuario = $idusuario;
+
+        return $this;
+    }
+
     /**
      * Set nombre
      *
@@ -339,6 +346,10 @@ class Usuarios implements UserInterface, Serializable
     public function unserialize($serialized){
         list($this->idusuarios,$this->email,$this->password)=unserialize($serialized);
     }
+
+    
+
+    
 
    
     

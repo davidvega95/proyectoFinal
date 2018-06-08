@@ -114,7 +114,7 @@ class UsuarioController extends Controller
         $file2=$bits2;
         $imagen2=base64_encode($bits2);
         $imagenesCod2[$producto->getIdproductos()]=$imagen2;
-        dump($producto);
+        //dump($producto);
         
 
          

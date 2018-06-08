@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<main>
+    
+    <div class="content-menu">
+        <li onclick="abrirDiv1()"><span class="lnr lnr-home icon1"></span><h4 class="text1">PERFIL</h4></li>
+        <li><span class="lnr lnr-home icon1"></span><h4 class="text1">
+            <a href=" {{path('paginaPrincipal')}}"  class="text3">PRODUCTOS</a>    
+    
+    </li>
+        <li><span class="lnr lnr-store icon3"></span>
+            <a href=" {{path('chatPrincipal',{'idUsuario':productos[0].usuariosusuarios.idusuarios})}}"  class="text3">MENSAJES</a></li>
+        <li onclick="abrirDiv4()"><span class="lnr lnr-picture icon4"></span><h4  class="text4">FAVORITOS</h4></li>
+        {% if app.user.rolesroles[0]=="Admin" %}
+            <li><span class="lnr lnr-home icon1"></span><h4 class="text1">
+                    <a href=" {{path('gestionUsuarios')}}"  class="text3">Gestión Usuarios</a>    
+            
+            </li>
+            <li><span class="lnr lnr-home icon1"></span><h4 class="text1">
+                <a href=" {{path('gestionCategorias')}}"  class="text3">Gestión Categorias</a>    
+        
+        </li>
+            
+        {% endif %}
+        
+        
+    </div>
+
+    <div class="container">
+        <div class="titulo">
+            <h3>Tu Perfil</h3>
+        </div>
+        <div class="parrafo1">
+            <span>Aqui podrás ver y editar los datos de tu perfil</span>
+            	
+            <a class="btn btn-success" href="{{ path('logout') }}">Cerrar sesión</a>
+            <div id="imagen">
+                    <div class="usuarios_producto">
+                        <div class="foto_usuario" style="background-image: url('data:image/jpeg;base64,{{imagenCod1[usuario.idusuarios] }}'
+                            )">
+                            
+                            </div>
+                        
+                    </div>
+
+
+            </div>
+             <!-- Formulario para editar -->
+             <div class="formularioEdicionUsu">
+                    <h1>Formulario a editar</h1>
+                
+                    {{ form_start(fomEditarUsu) }}
+                    {{ form_errors(fomEditarUsu) }}
+                
+                    {{ form_widget(fomEditarUsu) }}
+                   
+                
+                    
+                {{ form_end(fomEditarUsu) }}
+                </div>
+        </div>
+        </div>
+    
+
+
+            
+       
+
+           
+
+            
+            
+        
+        
+</main>
+
+
+
+
+{% endblock %}

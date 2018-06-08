@@ -4,31 +4,50 @@
 <main>
     
     <div class="content-menu">
-        <li onclick="abrirDiv1()"><span class="lnr lnr-home icon1"></span><h4 class="text1">PERFIL</h4></li>
+        <li><span class="lnr lnr-store icon3"></span>
+            <a href=" {{path('perfil')}}"  class="text3">PERFIL</a></li>
         <li onclick="abrirDiv2()"><span class="lnr film-play icon2"></span>
             <a href=" {{path('paginaPrincipal') }}"  class="text2">PRODUCTOS</a></li>
         </li>
+        {% if conversaciones[0] is defined %}
         <li><span class="lnr lnr-store icon3"></span>
             <a href=" {{path('chat', {'idProducto': conversaciones[0].idproductos,'idUsuario': conversaciones[0].idusuarios}) }}"  class="text3">MENSAJES</a></li>
+        {% endif %}
         <li onclick="abrirDiv4()"><span class="lnr lnr-picture icon4"></span><h4  class="text4">FAVORITOS</h4></li>
+        {% if app.user.rolesroles[0]=="Admin" %}
+            <li><span class="lnr lnr-home icon1"></span><h4 class="text4">
+                    <a href=" {{path('gestionUsuarios')}}"  class="text4">Gestión Usuarios</a>    
+            
+            </li>
+            <li><span class="lnr lnr-home icon1"></span><h4 class="text1">
+                <a href=" {{path('gestionCategorias')}}"  class="text3">Gestión Categorias</a>    
         
+            </li>
+
+         {% endif %}
         
         
     </div>
     <div class="contenedorChat" style="display:inline-block">
+        
         <div class="lista">
             {% if conversaciones is defined %}
             
             {% for conversacion in conversaciones %}
+            <a href="{{ path('chatPrivado', {'idUsuario': conversacion.idusuarios,
+            'idconversacion': conversacion.idconversaciones }) }}">
             <div id="conversacion{{conversacion.idconversaciones}}">
                 <img width="100" height="100" src="data:image/jpeg;base64,{{imagenCod[conversacion.idproductos]}}"/>  
                 <span>{{conversacion.descripcion}}</span>
                 <span>{{conversacion.nombre}}</span>
+            </a>
              </div>  
             {% endfor %}
         </div>
+       
         
         </div>
+        {% if conversation is defined %} 
         <div id="contenedor">
                 <div id="caja-chat">
                     <div id="chat">
@@ -44,22 +63,18 @@
                         </div>
                     </div>
                 </div>
-                {{ form_start(form) }}
-                {{ form_errors(form) }}
-            
-                {{ form_widget(form) }}
-               
-            
-                
-            {{ form_end(form) }}
-            <form name="formulario" id="{{conversaciones[0].idproductos}}">
+              
+            <form name="formulario" id="{{conversation[0].idproductos}}">
                 <label>Mensaje</label>
                 <input name="mensaje" id="mensaje">
-                <input type="button" id="enviarMensaje{{conversaciones[0].idconversaciones}}" value="enviar">
+                <input type="button" id="enviarMensaje{{conversation[0].idconversaciones}}" value="enviar">
             </form>
-                
+           {% endif %}     
     
             </div>
+
+
+
         {% endif %}
 
            

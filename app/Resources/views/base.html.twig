@@ -62,7 +62,14 @@
                     <span class="precio">{{producto.precio}}€</span></br>
                     <span class="nombre" id="{{producto.nombre}}">{{producto.nombre}}</span></br>
                     <span class="descripcion">{{producto.descripcion}}</span></br>
-                    <a class="escribir btn btn-info" href="{{url("chat",{"idProducto":producto.idproductos,"idUsuario":producto.usuariosusuarios.idusuarios})}}">Escribir</a>
+                    {%  if app.user %}
+                    
+                            <a class="escribir btn btn-info" href="{{url("chat",{"idProducto":producto.idproductos,"idUsuario":producto.usuariosusuarios.idusuarios})}}">Escribir</a>
+                    
+                    {% else %}
+                    <a class="escribir btn btn-info" data-toggle="modal" data-target="#myModal" >Escribir</a>
+                    
+                            {% endif %}
                     <a class="ver btn btn-success" href="{{url("imagen",{"id":producto.idproductos})}}">Ver producto</a>
                     <hr>
                 </a>

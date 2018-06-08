@@ -41,6 +41,16 @@ class Conversaciones
      */
     private $id_usuarios;
 
+     /**
+     * @var \Usuarios
+     *
+     * @ORM\ManyToOne(targetEntity="Usuarios")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_usuarios1", referencedColumnName="idusuarios")
+     * })
+     */
+    private $id_usuarios1;
+
     public function getIdconversaciones()
     {
         return $this->idconversaciones;
@@ -101,6 +111,30 @@ class Conversaciones
     public function getId_usuarios()
     {
         return $this->id_usuarios;
+    }
+
+     /**
+     * Set id_usuarios
+     *
+     * @param \AppBundle\Entity\Usuarios $id_usuarios
+     *
+     * @return Productos
+     */
+    public function setId_usuarios1(\AppBundle\Entity\Usuarios $id_usuarios1 = null)
+    {
+        $this->id_usuarios1 = $id_usuarios1;
+
+        return $this;
+    }
+
+    /**
+     * Get id_usuarios
+     *
+     * @return \AppBundle\Entity\Usuarios
+     */
+    public function getId_usuarios1()
+    {
+        return $this->id_usuarios1;
     }
 
 

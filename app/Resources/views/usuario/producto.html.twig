@@ -12,8 +12,17 @@
             <span>{{numProductosUsuario[0][1]}}</span>
             <span>Productos</span>
         </div>
-        <button type="button" class=" chat_usuario btn btn-info">chat</button>
 
+       {%  if app.user %}
+
+        <a class=" chat_usuario btn btn-info" href="{{url("chat",{"idProducto":producto.idproductos,"idUsuario":producto.usuariosusuarios.idusuarios})}}">Escribir</a>
+
+        {% else %}
+        <button type="button" class="chat_usuario btn btn-info" data-toggle="modal" data-target="#myModal">
+            Escribir
+          </button>
+
+        {% endif %}
     </div>
     <div class="imagen">
     <img src="data:image/jpeg;base64,{{imagenCod2[producto.idproductos]}}"/></br>

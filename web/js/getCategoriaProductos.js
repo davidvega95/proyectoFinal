@@ -16,11 +16,12 @@
 
         });
         //al hacer click al boton editar de la tabla productos PUBLICADOS
-        $( "button[id^=formEditar]" ).click(function() {
+        $( "button[id^=formEditarP]" ).click(function() {
        
             var oID = $(this).attr("id");
-            //alert(oID.charAt(oID.length-1));
-            idProducto=oID.charAt(oID.length-1);
+            var regex = /(\d+)/g;
+            var idProducto=oID.match(regex);
+            alert(idProducto);
             $.ajax({
                 type: "GET",
                 url: "http://localhost/proyectofinal/proyectoThinder/web/app_dev.php/pagina/idProducto",
@@ -32,6 +33,7 @@
                     $("#form_nombre").val(response[0].nombre);
                      $("#form_precio").val(response[0].precio);
                      $("#form_descripcion").val(response[0].descripcion);
+                    
                     
                     $( ".formularioEdicionPro" ).show();
                     $( ".container_dos" ).hide();
@@ -58,26 +60,30 @@
           });
           $("input[id^=checkbox]").change(function(){
               //cogemos id del producto
-            var oID = $(this).attr("id");
-            alert(oID.charAt(oID.length-1));
-            idProducto=oID.charAt(oID.length-1);
-            if($("#checkbox"+idProducto).attr('checked')){
+            
+              var oID = $(this).attr("id");
+              var regex = /(\d+)/g;
+              var idUsuario=oID.match(regex);
+              alert(idUsuario);
+            if($("#checkbox"+idUsuario).attr('checked')){
                 //alert("entra aquiiii");
-                $("#checkbox"+idProducto).removeAttr("checked");
+                $("#checkbox"+idUsuario).removeAttr("checked");
 
             }
             
             //si el checkbox está atrue
-            if( $("#checkbox"+idProducto).is(':checked') ) {
+            if( $("#checkbox"+idUsuario).is(':checked') ) {
+                alert(idUsuario);
                 $.ajax({
                     type: "GET",
-                    url: "http://localhost/proyectofinal/proyectoThinder/web/app_dev.php/producto/check",
+                    url: "http://localhost/proyectofinal/proyectoThinder/web/app_dev.php/usuarioR/check",
                     dataType: "json",
-                    data: {idProducto : idProducto}
+                    data: {idUsuario : idUsuario}
                 }).done  (function(response) 
                       {
+                        alert("entra---------");
                           //alert("entra en producto checqueado");
-                          $("#nombre").append('<p>'+response[0].nombre+'</p>');
+                          $("#nombreC").append('<p>'+response[0].nombre+'</p>');
                          
         
                       } )
@@ -94,9 +100,9 @@
                 else {
                     $.ajax({
                         type: "GET",
-                        url: "http://localhost/proyectofinal/proyectoThinder/web/app_dev.php/producto/check",
+                        url: "http://localhost/proyectofinal/proyectoThinder/web/app_dev.php/usuarioR/checkk",
                         dataType: "json",
-                        data: {idProducto : idProducto}
+                        data: {idUsuario : idUsuario}
                     }).done  (function(response) 
                           {
                               //alert("entra en producto no chekeado");
@@ -117,29 +123,160 @@
                 }
                 
             });
+            
+            $("input[id^=checkboxC]").change(function(){
+                //cogemos id del producto
+              
+                var oID = $(this).attr("id");
+                var regex = /(\d+)/g;
+                var idProducto=oID.match(regex);
+                alert(idProducto);
+              if($("#checkboxC"+idProducto).attr('checked')){
+                  //alert("entra aquiiii");
+                  $("#checkboxC"+idProducto).removeAttr("checked");
+  
+              }
+              
+              //si el checkbox está atrue
+              if( $("#checkboxC"+idProducto).is(':checked') ) {
+                  $.ajax({
+                      type: "GET",
+                      url: "http://localhost/proyectofinal/proyectoThinder/web/app_dev.php/categoria1/check",
+                      dataType: "json",
+                      data: {idProducto : idProducto}
+                  }).done  (function(response) 
+                        {
+                            //alert("entra en producto checqueado");
+                            $("#nombreC").append('<p>'+response[0].nombre+'</p>');
+                           
+          
+                        } )
+          
+                        .fail  (function(response) 
+                        {
+                            alert("entra");
+                            
+                          console.log(JSON.stringify(response));
+                        }
+          
+                      );
+                  }
+                  else {
+                      $.ajax({
+                          type: "GET",
+                          url: "http://localhost/proyectofinal/proyectoThinder/web/app_dev.php/categoria1/check",
+                          dataType: "json",
+                          data: {idProducto : idProducto}
+                      }).done  (function(response) 
+                            {
+                                //alert("entra en producto no chekeado");
+                                $("p").remove(":contains("+response[0].nombre+")");
+                               
+              
+                            } )
+              
+                            .fail  (function(response) 
+                            {
+                                alert("entra");
+                                
+                              console.log(JSON.stringify(response));
+                            }
+              
+                          );
+  
+                  }
+                  
+              });
+
+
+              $("input[id^=checkboxP]").change(function(){
+                //cogemos id del producto
+              
+                var oID = $(this).attr("id");
+                var regex = /(\d+)/g;
+                var idProducto=oID.match(regex);
+                alert(idProducto);
+              if($("#checkboxP"+idProducto).attr('checked')){
+                  //alert("entra aquiiii");
+                  $("#checkboxP"+idProducto).removeAttr("checked");
+  
+              }
+              
+              //si el checkbox está atrue
+              if( $("#checkboxP"+idProducto).is(':checked') ) {
+                  $.ajax({
+                      type: "GET",
+                      url: "http://localhost/proyectofinal/proyectoThinder/web/app_dev.php/producto/check",
+                      dataType: "json",
+                      data: {idProducto : idProducto}
+                  }).done  (function(response) 
+                        {
+                            //alert("entra en producto checqueado");
+                            $("#nombre").append('<p>'+response[0].nombre+'</p>');
+                           
+          
+                        } )
+          
+                        .fail  (function(response) 
+                        {
+                            alert("entra");
+                            
+                          console.log(JSON.stringify(response));
+                        }
+          
+                      );
+                  }
+                  else {
+                      $.ajax({
+                          type: "GET",
+                          url: "http://localhost/proyectofinal/proyectoThinder/web/app_dev.php/producto/check",
+                          dataType: "json",
+                          data: {idProducto : idProducto}
+                      }).done  (function(response) 
+                            {
+                                //alert("entra en producto no chekeado");
+                                $("p").remove(":contains("+response[0].nombre+")");
+                               
+              
+                            } )
+              
+                            .fail  (function(response) 
+                            {
+                                alert("entra");
+                                
+                              console.log(JSON.stringify(response));
+                            }
+              
+                          );
+  
+                  }
+                  
+              });
           
             
 
 
-          $( "button[id^=formBorrar]" ).click(function() {
+          $( "button[id^=formBorrarP]" ).click(function() {
             
-                 var oID = $(this).attr("id");
-                 alert(oID.charAt(oID.length-1));
-                 idProducto=oID.charAt(oID.length-1);
+                 
+                var oID = $(this).attr("id");
+                var regex = /(\d+)/g;
+                var idProducto=oID.match(regex);
+                alert(idProducto);
                  //checkea al producto que le ha dado borrar
-                 $("#checkbox"+idProducto).attr('checked', true);  
+                 $("#checkboxP"+idProducto).attr('checked', true);  
                  //$("#checkbox"+idProducto).css({"display": "block"});
                  //abre todos los checkbox
                  $("input:checkbox").each(function() {
                     $(this).css({"display": "block"});
                });
                //desaparece boton editar 
-               $( "button[id^=formEditar]" ).each(function() {
+               $( "button[id^=formEditarP]" ).each(function() {
                    $(this).css({"display": "none"});
 
                });
                //desaparece el boton borrar
-               $( "button[id^=formBorrar]" ).each(function() {
+               $( "button[id^=formBorrarP]" ).each(function() {
                 $(this).css({"display": "none"});
 
             });
@@ -154,7 +291,7 @@
                 data: {idProducto : idProducto}
             }).done  (function(response) 
                   {
-                     // alert("entra en ajax");
+                      alert("entra en ajax");
                       $("#nombre").append('<p>'+response[0].nombre+'</p>');
                      
     
@@ -209,6 +346,7 @@
             }).done  (function(response) 
                   {
                     $("#borrar").css({"display": "none"});
+                    location.reload();
                        
                      
                      
@@ -219,6 +357,7 @@
                   .fail  (function(response) 
                   {
                       alert("entra");
+                      location.reload();
                       
                     console.log(JSON.stringify(response));
                   }
@@ -239,15 +378,21 @@
         $( ".container_dos" ).hide();
         $( ".container_tres" ).hide();
         $( ".container_cuatro" ).hide();
+        $( ".container_cinco" ).hide();
+        $( ".container_seis" ).hide();
 
     }
     function abrirDiv2(){
+        alert("hola??");
         $( ".container_uno" ).hide();
+        $( ".container_cinco" ).hide();
+        $( ".container_seis" ).hide();
         $( ".formularioEdicionPro" ).hide();
         $( ".container_dos" ).show();
         $( ".container_tres" ).hide();
         $( ".container_cuatro" ).hide();
         $(".formularioNuevoProducto").hide();
+        
 
     }
     
@@ -256,6 +401,8 @@
         $( ".container_dos" ).hide();
         $( ".container_tres" ).hide();
         $( ".container_cuatro" ).show();
+        $( ".container_cinco" ).hide();
+        $( ".container_seis" ).hide();
 
     }
     //al hacer click al tab publicos
@@ -450,7 +597,8 @@
                     contentType: "application/json; charset=utf-8",
                 }).done  (function(response) 
                       {
-
+                        alert("geniaaal");
+                        console.log(response);
                         //eliminos todos los divs de datos-chat
                         $("#datos-chat").empty("div");
                         for (i = 0; i < response.length; i++) { 
@@ -477,9 +625,348 @@
                     );
                
 
-            })      
+            })   
+            
+            $("#nuevoUsuario").click(function(){
+                $( ".container_cinco" ).hide();
+                $( ".formularioNuevoUsuario" ).show();
+
+
+            });
+
+             $("#nuevaCategoria").click(function(){
+                $( ".container_seis" ).hide();
+                $( ".formularioNuevaCategoria" ).show();
+
+
+            });
+
+            //al hacer click al boton editar de la tabla uusarios 
+     $( "button[id^=EditarU]" ).click(function() {
+        alert("sdfsfdsfd");        
+            var oID = $(this).attr("id");
+            var regex = /(\d+)/g;
+            var idUsuario=oID.match(regex);
+           
+            $.ajax({
+                type: "GET",
+                url: "http://localhost/proyectofinal/proyectoThinder/web/app_dev.php/crudUsuarios/idUsuario",
+                dataType: "json",
+                data: {idUsuario : idUsuario}
+            }).done  (function(response) 
+                  {
+                   
+                    $(".idusuarios").val(response[0].idusuarios);
+                    $(".nombre").val(response[0].nombre);
+                     $(".apellidos").val(response[0].apellidos);
+                     $(".email").val(response[0].email);
+                     $(".nick").val(response[0].nick);
+                     $(".password").val(response[0].password);
+                     $(".fechanc").val(response[0].fechanac);
+                     $( ".formularioEdicionUsuario" ).show();
+                     $( ".container_cinco" ).hide();
+                   
+
+
+                    
+    
+                  } )
+    
+                  .fail  (function(response) 
+                  {
+                      alert("entra");
+                      
+                    console.log(JSON.stringify(response));
+                  }
+    
+                );
+            
+
+           // $( ".container_dos" ).hide();
+          //  $( ".formularioEdicionPro" ).show();
+
+            
+          });
+
+
+                 //al hacer click al boton editar de la tabla uusarios 
+     $( "button[id^=EditarC]" ).click(function() {
+        alert("sdfsfdsfd");        
+            var oID = $(this).attr("id");
+            var regex = /(\d+)/g;
+            var idUsuario=oID.match(regex);
+           
+            $.ajax({
+                type: "GET",
+                url: "http://localhost/proyectofinal/proyectoThinder/web/app_dev.php/crudCategorias/idCategoria",
+                dataType: "json",
+                data: {idUsuario : idUsuario}
+            }).done  (function(response) 
+                  {
+                   
+                    $(".idcategoriaproductos").val(response[0].idcategoriaproductos);
+                    $(".nombre").val(response[0].nombre);
+                    $( ".formularioEdicionCategoria" ).show();
+                    $( ".container_seis" ).hide();
+                   
+
+
+                    
+    
+                  } )
+    
+                  .fail  (function(response) 
+                  {
+                      alert("entra");
+                      
+                    console.log(JSON.stringify(response));
+                  }
+    
+                );
+            
+
+           // $( ".container_dos" ).hide();
+          //  $( ".formularioEdicionPro" ).show();
+
+            
+          });
+
+          $( "button[id^=formBorrarU]" ).click(function() {
+            
+                var oID = $(this).attr("id");
+                var regex = /(\d+)/g;
+                var idUsuario=oID.match(regex);
+                alert(idUsuario);
+                 //checkea al producto que le ha dado borrar
+                 $("#checkbox"+idUsuario).attr('checked', true);  
+                 //$("#checkbox"+idProducto).css({"display": "block"});
+                 //abre todos los checkbox
+                 $("input:checkbox").each(function() {
+                    $(this).css({"display": "block"});
+               });
+               //desaparece boton editar 
+               $( "button[id^=formEditarU]" ).each(function() {
+                   $(this).css({"display": "none"});
+
+               });
+               //desaparece el boton borrar
+               $( "button[id^=formBorrarU]" ).each(function() {
+                $(this).css({"display": "none"});
+
+            });
+               //aparece un div
+               $("#borrar").css({"display": "block"});
+
+               //ajax para coger los nombre de los productos que esta en checkbox a true
+               $.ajax({
+                type: "GET",
+                url: "http://localhost/proyectofinal/proyectoThinder/web/app_dev.php/usuarioR/check",
+                dataType: "json",
+                data: {idUsuario : idUsuario}
+            }).done  (function(response) 
+                  {
+                      alert("hola");
+                     // alert("entra en ajax");
+                      $("#nombreC").append('<p>'+response[0].nombre+'</p>');
+                     
+    
+                  } )
+    
+                  .fail  (function(response) 
+                  {
+                      alert("entra");
+                      
+                    console.log(JSON.stringify(response));
+                  }
+    
+                );
+            });
+
+
+            $( "button[id^=formBorrarC]" ).click(function() {
+                
+                     
+                    var oID = $(this).attr("id");
+                    var regex = /(\d+)/g;
+                    var idUsuario=oID.match(regex);
+                    alert(idUsuario);
+                     //checkea al producto que le ha dado borrar
+                     $("#checkboxC"+idUsuario).attr('checked', true);  
+                     //$("#checkbox"+idProducto).css({"display": "block"});
+                     //abre todos los checkbox
+                     $("input:checkbox").each(function() {
+                        $(this).css({"display": "block"});
+                   });
+                   //desaparece boton editar 
+                   $( "button[id^=formEditarC]" ).each(function() {
+                       $(this).css({"display": "none"});
+    
+                   });
+                   //desaparece el boton borrar
+                   $( "button[id^=formBorrarC]" ).each(function() {
+                    $(this).css({"display": "none"});
+    
+                });
+                   //aparece un div
+                   $("#borrar").css({"display": "block"});
+    
+                   //ajax para coger los nombre de los productos que esta en checkbox a true
+                   $.ajax({
+                    type: "GET",
+                    url: "http://localhost/proyectofinal/proyectoThinder/web/app_dev.php/categoriaR/check",
+                    dataType: "json",
+                    data: {idUsuario : idUsuario}
+                }).done  (function(response) 
+                      {
+                         // alert("entra en ajax");
+                          $("#nombreC").append('<p>'+response[0].nombre+'</p>');
+                         
+        
+                      } )
+        
+                      .fail  (function(response) 
+                      {
+                          alert("entra");
+                          
+                        console.log(JSON.stringify(response));
+                      }
+        
+                    );
+                });
+
+
+            //al hacer click a borrar productos del div generado
+            $( "#borrar_usuarios" ).click(function(){
+                
+                var array=[];
+                var texto=$('#nombreC p').text();
+                $('span').children('p').each(function(){
+                    array.push($(this).text());
+                });
+                alert(array.length);
+                
+                
+                var objeto={};
+               for(i=0;i<array.length;i++){
+                   var nombreUsuario=array[i];
+                   var producto={nombreProducto:array[i]}
+                  
+                objeto["nombreUsuario"+i]=array[i];
+                
+                
+                
+               }
+               objetoLongitud=Object.keys(objeto).length;;
+               
+               objeto["longitudObjeto"]=objetoLongitud;
+               console.log(objeto);
+
+               
+                   //AJAX PARA BORRAR PRODUCTOS
+                    //ajax para coger los nombre de los productos que esta en checkbox a true
+               $.ajax({
+                type: "GET",
+                url: "http://localhost/proyectofinal/proyectoThinder/web/app_dev.php/usuario1/borrar",
+                dataType: "json",
+                data: objeto,
+                contentType: "application/json; charset=utf-8",
+            }).done  (function(response) 
+                  {
+                    $("#borrar").css({"display": "none"});
+                       
+                     
+                     
+                     
+    
+                  } )
+    
+                  .fail  (function(response) 
+                  {
+                      alert("entra");
+                      
+                    console.log(JSON.stringify(response));
+                  }
+    
+                );
+                   
+
+                   
+               
+              
+
+            });
+
+             //al hacer click a borrar productos del div generado
+             $( "#borrar_categorias" ).click(function(){
+                
+                var array=[];
+                var texto=$('#nombreC p').text();
+                $('span').children('p').each(function(){
+                    array.push($(this).text());
+                });
+                alert(array.length);
+                
+                
+                var objeto={};
+               for(i=0;i<array.length;i++){
+                   var nombreUsuario=array[i];
+                   var producto={nombreProducto:array[i]}
+                  
+                objeto["nombreUsuario"+i]=array[i];
+                
+                
+                
+               }
+               objetoLongitud=Object.keys(objeto).length;;
+               
+               objeto["longitudObjeto"]=objetoLongitud;
+               console.log(objeto);
+
+               
+                   //AJAX PARA BORRAR PRODUCTOS
+                    //ajax para coger los nombre de los productos que esta en checkbox a true
+               $.ajax({
+                type: "GET",
+                url: "http://localhost/proyectofinal/proyectoThinder/web/app_dev.php/categoria1/borrar",
+                dataType: "json",
+                data: objeto,
+                contentType: "application/json; charset=utf-8",
+            }).done  (function(response) 
+                  {
+                    $("#borrar").css({"display": "none"});
+                       
+                     
+                     
+                     
+    
+                  } )
+    
+                  .fail  (function(response) 
+                  {
+                      alert("entra");
+                      
+                    console.log(JSON.stringify(response));
+                  }
+    
+                );
+                   
+
+                   
+               
+              
+
+            });
+
+            $(".divPerfil").click(function(){
+                $(".container_uno").show();
+                $(".contenedorChat").hide();
+                $("#contenedor").hide();
+               
+            })
 
     });
+     
+
      
    
    

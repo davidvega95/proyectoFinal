@@ -31,183 +31,174 @@ class PaginaPrincipalController extends Controller
 
      public function paginaPrincipalAction(Request $request){
 
+        $imagenesCod=null;
+        $imagenesCodV=null;
+
     $session = $this->get('session');
+    
+    
     $session->set('filter', array(
     'accounts' => 'value',
 ));
 
-    $email=$this->getUser()->getUsername();
-    //coger primero el id de usuario que sea del gmail
-    $em = $this->getDoctrine()->getManager();
-    //consulta por id
-    //al poner la foto en la consulta da error
-    $query=$em->createQuery('SELECT u.idusuarios FROM AppBundle:Usuarios u WHERE u.email  LIKE :string')
-    ->setParameter(':string',$email);
-    $usuario=$query->getResult();
-    //coger el usuario logueado
-    $usuario1 = $this->getDoctrine()
-    ->getRepository(Usuarios::class)
-    ->find($usuario[0]["idusuarios"]);
+  
+    if (is_object($this->getUser())) {
     
-    $producto = new Productos();
-    //me creo el form del nuevo producto
-    $formNuevoProducto = $this->createFormBuilder($producto)
-    ->add('idproductos', HiddenType::class)
-    ->add('nombre', TextType::class)
-    ->add('precio', TextType::class)
-    ->add('descripcion', TextType::class)
-    ->add('categoriaproductoscategoriaproductos')
-    ->add('estadoproductoestadoproducto')
-    ->add('foto', FileType::class,array(
-        "label" => "Imagen:",
-        "attr" =>array("class" => "form-control")
-    ))
-    ->add('actualizar', SubmitType::class, array('label' => 'Guardar'))
-    ->getForm();
-    $formNuevoProducto->handleRequest($request);
+        $email=$this->getUser()->getUsername();
 
-    if($formNuevoProducto->isSubmitted() && $formNuevoProducto->isValid()){
-        $foto = $formNuevoProducto->get('foto')->getData();
-        if(file_exists ($foto)){
-        //pasamos el archivo a binario
-        $foto1=file_get_contents($foto);
-        //echo $foto1;
-        //obtenemos los datos del formulario en un objeto productos
-        $producto->setPrecio($formNuevoProducto->get('precio')->getData());
-        $producto->setNombre($formNuevoProducto->get('nombre')->getData());
-        $producto->setDescripcion($formNuevoProducto->get('descripcion')->getData());
-        $producto->setFoto($foto1);
-        $producto->setPrecio($formNuevoProducto->get('precio')->getData());
-        $producto->setCategoriaproductoscategoriaproductos($formNuevoProducto->get('categoriaproductoscategoriaproductos')->getData());
-        $producto->setEstadoproductoestadoproducto($formNuevoProducto->get('estadoproductoestadoproducto')->getData());
-        $producto->setCategoriaproductoscategoriaproductos($formNuevoProducto->get('categoriaproductoscategoriaproductos')->getData());
-        $producto->setUsuariosusuarios($usuario1);
-        //var_dump($formNuevoProducto->get('usuariosusuarios')->getData());
         
-        $em=$this->getDoctrine()->getManager();
-        //lo guardamos en la base de datos
-        $em->persist($producto);
-        $em->flush();
-        return $this->redirect($this->generateUrl('paginaPrincipal'));
-        }
-        
-    }
-    //me creo el form de Editar 
-    $formEditarPro = $this->createFormBuilder($producto)
-    ->add('idproductos', HiddenType::class)
-    ->add('nombre', TextType::class)
-    ->add('precio', TextType::class)
-    ->add('descripcion', TextType::class)
-    ->add('actualizar', SubmitType::class, array('label' => 'Actualizar'))
-    ->getForm();
-    $formEditarPro->handleRequest($request);
-    //al darle al boton actualizar
-    if($formEditarPro->isSubmitted() && $formEditarPro->isValid()){
-        //cogemos los datos del formulario
-        $idProductos = $formEditarPro->get('idproductos')->getData();
-        $nombreProductos= $formEditarPro->get('nombre')->getData();
-        $descripcionProducto= $formEditarPro->get('descripcion')->getData();
-        $precioProducto= $formEditarPro->get('precio')->getData();
-
+        //coger primero el id de usuario que sea del gmail
         $em = $this->getDoctrine()->getManager();
-        $product = $em->getRepository('AppBundle:Productos')->find($idProductos);
-
-        if (!$product) {
-            throw $this->createNotFoundException(
-                'No product found for id '.$id
-            );
-        }
-        //actualizamos los datos 
-        $product->setNombre($nombreProductos);
-        $product-> setDescripcion($descripcionProducto);
-        $product-> setPrecio($precioProducto);
-        //lo persistimos
-        $em->flush();
-
-        return $this->redirect($this->generateUrl('paginaPrincipal'));
-
-    }
-
-
-
-
-    $query1=$em->createQuery('SELECT COUNT(p) from AppBundle:Productos p where p.usuariosusuarios=:id')
-    ->setParameter(':id',$usuario[0]["idusuarios"]);
-    //ejecutamos sentencias
-    $numeroProductos=$query1->getResult();
-    dump($numeroProductos);
-
-        $categorias=$this->getDoctrine()
-    ->getRepository("AppBundle\Entity\Categoriaproductos")
-    ->findAll();
-    //inicializamos la entidad estado para que no salga nulo 
-    $estado=$this->getDoctrine()
-    ->getRepository("AppBundle\Entity\Estadoproducto")
-    ->findAll();
-    //inicializamos la entidad usuario para que no salga nulo
-    $usuarios=$this->getDoctrine()
-    ->getRepository("AppBundle\Entity\Usuarios")
-    ->findAll();
-    //mostrar productos que tiene cada usuario
-    $query2=$em->createQuery('SELECT p from AppBundle:Productos p where p.usuariosusuarios=:id and  p.estadoproductoestadoproducto=2')
-    ->setParameter(':id',$usuario[0]["idusuarios"]);
-    $productos=$query2->getResult();
-
-    $query3=$em->createQuery('SELECT p from AppBundle:Productos p where p.usuariosusuarios=:id and p.estadoproductoestadoproducto=1')
-    ->setParameter(':id',$usuario[0]["idusuarios"]);
-    $productosV=$query3->getResult();
-
-    dump($productos);
-    //dump($categorias);
-    //pasamos las fotos de los usuarios a base 64
-    foreach($usuarios as $usuario){
-        $file1=$usuario->getFoto();
-        if($file1!=null){
-        $bits1=stream_get_contents($file1);
-        $file1=$bits1;
-        $imagen1=base64_encode($bits1);
-        $imagenesCod1[$usuario->getIdusuarios()]=$imagen1;
-        }
-
-    }
-    foreach ($productos as $producto){
-    // dump($producto->getFoto());
-    //guardamos en una variable cada una de las fotos de la bd
-        $file=$producto->getFoto();
-       // echo $file.   "       ";
-        //cogemos el archivo de usuario
-        //$usuario=$producto->getUsuariosusuarios();
-        //obtenemos la foto del usuario
-        //$file1=$usuario->getFoto();
-        
-
-        //lo pasamos a bits
-        $bits=stream_get_contents($file);
-        //$bits1=stream_get_contents($file1);
-        //echo $bits;
-        $file=$bits;
-        //$file1=$bits1;
-        //lo codificamos a base 64 para proyectarlo
-        $imagen=base64_encode($bits);
-        //$imagen1=base64_encode($bits1);
     
-        //creamos un array donde vamos a meter una array de imagenes codificados en base 64
-        $imagenesCod[$producto->getIdproductos()]=$imagen;
-        //$imagenesCod1[$producto->getIdproductos()]=$imagen1;
+        //consulta por id
+        //al poner la foto en la consulta da error
+        $query=$em->createQuery('SELECT u.idusuarios FROM AppBundle:Usuarios u WHERE u.email  LIKE :string')
+        ->setParameter(':string',$email);
         
-    }
+        $usuario=$query->getResult();
+        dump($usuario);
+        
+        //coger el usuario logueado
+        $usuario1 = $this->getDoctrine()
+        ->getRepository(Usuarios::class)
+        ->find($usuario[0]["idusuarios"]);
+        dump($usuario1);
+        
+        
+        $producto = new Productos();
+        //me creo el form del nuevo producto
+        $formNuevoProducto = $this->createFormBuilder($producto)
+        ->add('idproductos', HiddenType::class)
+        ->add('nombre', TextType::class)
+        ->add('precio', TextType::class)
+        ->add('descripcion', TextType::class)
+        ->add('categoriaproductoscategoriaproductos')
+        ->add('estadoproductoestadoproducto')
+        ->add('foto', FileType::class,array(
+            "label" => "Imagen:",
+            "attr" =>array("class" => "form-control")
+        ))
+        ->add('actualizar', SubmitType::class, array('label' => 'Guardar'))
+        ->getForm();
+        $formNuevoProducto->handleRequest($request);
+    
+        if($formNuevoProducto->isSubmitted() && $formNuevoProducto->isValid()){
+            $foto = $formNuevoProducto->get('foto')->getData();
+            if(file_exists ($foto)){
+            //pasamos el archivo a binario
+            $foto1=file_get_contents($foto);
+            //echo $foto1;
+            //obtenemos los datos del formulario en un objeto productos
+            $producto->setPrecio($formNuevoProducto->get('precio')->getData());
+            $producto->setNombre($formNuevoProducto->get('nombre')->getData());
+            $producto->setDescripcion($formNuevoProducto->get('descripcion')->getData());
+            $producto->setFoto($foto1);
+            $producto->setPrecio($formNuevoProducto->get('precio')->getData());
+            $producto->setCategoriaproductoscategoriaproductos($formNuevoProducto->get('categoriaproductoscategoriaproductos')->getData());
+            $producto->setEstadoproductoestadoproducto($formNuevoProducto->get('estadoproductoestadoproducto')->getData());
+            $producto->setCategoriaproductoscategoriaproductos($formNuevoProducto->get('categoriaproductoscategoriaproductos')->getData());
+            $producto->setUsuariosusuarios($usuario1);
+            //var_dump($formNuevoProducto->get('usuariosusuarios')->getData());
+            
+            $em=$this->getDoctrine()->getManager();
+            //lo guardamos en la base de datos
+            $em->persist($producto);
+            $em->flush();
+            return $this->redirect($this->generateUrl('paginaPrincipal'));
+            }
+            
+        }
+    
+        //me creo el form de Editar 
+        $formEditarPro = $this->createFormBuilder($producto)
+        ->add('idproductos', HiddenType::class)
+        ->add('nombre', TextType::class)
+        ->add('precio', TextType::class)
+        ->add('descripcion', TextType::class)
+        ->add('actualizar', SubmitType::class, array('label' => 'Actualizar'))
+        ->getForm();
+        $formEditarPro->handleRequest($request);
+        //al darle al boton actualizar
+        if($formEditarPro->isSubmitted() && $formEditarPro->isValid()){
+            //cogemos los datos del formulario
+            $idProductos = $formEditarPro->get('idproductos')->getData();
+            $nombreProductos= $formEditarPro->get('nombre')->getData();
+            $descripcionProducto= $formEditarPro->get('descripcion')->getData();
+            $precioProducto= $formEditarPro->get('precio')->getData();
+            $foto=$formEditarPro->get('foto')->getData();
 
-    foreach ($productosV as $producto){
+            $em = $this->getDoctrine()->getManager();
+            $product = $em->getRepository('AppBundle:Productos')->find($idProductos);
+
+            if (!$product) {
+                throw $this->createNotFoundException(
+                    'No product found for id '.$id
+                );
+            }
+            //actualizamos los datos 
+            $product->setNombre($nombreProductos);
+            $product-> setDescripcion($descripcionProducto);
+            $product-> setPrecio($precioProducto);
+            //lo persistimos
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('paginaPrincipal'));
+
+        }
+
+
+
+        
+        $query1=$em->createQuery('SELECT COUNT(p) from AppBundle:Productos p where p.usuariosusuarios=:id')
+        ->setParameter(':id',$usuario[0]["idusuarios"]);
+        //ejecutamos sentencias
+        $numeroProductos=$query1->getResult();
+        dump($numeroProductos);
+
+            $categorias=$this->getDoctrine()
+        ->getRepository("AppBundle\Entity\Categoriaproductos")
+        ->findAll();
+        //inicializamos la entidad estado para que no salga nulo 
+        $estado=$this->getDoctrine()
+        ->getRepository("AppBundle\Entity\Estadoproducto")
+        ->findAll();
+        //inicializamos la entidad usuario para que no salga nulo
+        $usuarios=$this->getDoctrine()
+        ->getRepository("AppBundle\Entity\Usuarios")
+        ->findAll();
+        //mostrar productos que tiene cada usuario
+        $query2=$em->createQuery('SELECT p from AppBundle:Productos p where p.usuariosusuarios=:id and  p.estadoproductoestadoproducto=2')
+        ->setParameter(':id',$usuario[0]["idusuarios"]);
+        $productos=$query2->getResult();
+
+        $query3=$em->createQuery('SELECT p from AppBundle:Productos p where p.usuariosusuarios=:id and p.estadoproductoestadoproducto=1')
+        ->setParameter(':id',$usuario[0]["idusuarios"]);
+        $productosV=$query3->getResult();
+
+        dump($productos);
+        //dump($categorias);
+        //pasamos las fotos de los usuarios a base 64
+        foreach($usuarios as $usuario){
+            $file1=$usuario->getFoto();
+            if($file1!=null){
+            $bits1=stream_get_contents($file1);
+            $file1=$bits1;
+            $imagen1=base64_encode($bits1);
+            $imagenesCod1[$usuario->getIdusuarios()]=$imagen1;
+            }
+
+        }
+        foreach ($productos as $producto){
         // dump($producto->getFoto());
         //guardamos en una variable cada una de las fotos de la bd
             $file=$producto->getFoto();
-           // echo $file.   "       ";
+        // echo $file.   "       ";
             //cogemos el archivo de usuario
             //$usuario=$producto->getUsuariosusuarios();
             //obtenemos la foto del usuario
             //$file1=$usuario->getFoto();
             
-    
+
             //lo pasamos a bits
             $bits=stream_get_contents($file);
             //$bits1=stream_get_contents($file1);
@@ -219,51 +210,113 @@ class PaginaPrincipalController extends Controller
             //$imagen1=base64_encode($bits1);
         
             //creamos un array donde vamos a meter una array de imagenes codificados en base 64
-            $imagenesCodV[$producto->getIdproductos()]=$imagen;
+            $imagenesCod[$producto->getIdproductos()]=$imagen;
             //$imagenesCod1[$producto->getIdproductos()]=$imagen1;
             
         }
-    //creamos un formulario para el registro
-    $usuario = new Usuarios();
 
-    $form = $this->createFormBuilder($usuario)
-            ->add('Nombre', TextType::class)
-            ->add('Apellidos', TextType::class)
-            ->add('password', TextType::class)
+        foreach ($productosV as $producto){
+            // dump($producto->getFoto());
+            //guardamos en una variable cada una de las fotos de la bd
+                $file=$producto->getFoto();
+            // echo $file.   "       ";
+                //cogemos el archivo de usuario
+                //$usuario=$producto->getUsuariosusuarios();
+                //obtenemos la foto del usuario
+                //$file1=$usuario->getFoto();
+                
+        
+                //lo pasamos a bits
+                $bits=stream_get_contents($file);
+                //$bits1=stream_get_contents($file1);
+                //echo $bits;
+                $file=$bits;
+                //$file1=$bits1;
+                //lo codificamos a base 64 para proyectarlo
+                $imagen=base64_encode($bits);
+                //$imagen1=base64_encode($bits1);
+            
+                //creamos un array donde vamos a meter una array de imagenes codificados en base 64
+                $imagenesCodV[$producto->getIdproductos()]=$imagen;
+                //$imagenesCod1[$producto->getIdproductos()]=$imagen1;
+                
+            }
+            
+            //editar usuario formulario
+        
+            $formEditarUsu = $this->createFormBuilder($usuario1)
+            ->add('idusuarios', HiddenType::class)
+            ->add('nombre', TextType::class)
+            ->add('apellidos', TextType::class)
+            ->add('fechaNac', DateType::class)
             ->add('email', TextType::class)
-            ->add('nick', TextType::class)
-            ->add('FechaNac',  DateType::class)
-            ->add('guardar', SubmitType::class, array('label' => 'Enviar'))
+            ->add('password', TextType::class)
+            ->add('actualizar', SubmitType::class, array('label' => 'Actualizar'))
             ->getForm();
 
-    $form->handleRequest($request);
+            $formEditarUsu->handleRequest($request);
+            if($formEditarUsu->isSubmitted() && $formEditarUsu->isValid())
+            {
+                //cogemos los datos del formulario
+                
+                $idUsuario =$formEditarUsu->get('idusuarios')->getData();
+                $nombreUsuario= $formEditarUsu->get('nombre')->getData();
+                $apellidosUsuario= $formEditarUsu->get('apellidos')->getData();
+                $fechaUsuario= $formEditarUsu->get('fechaNac')->getData();
+                $emailUsuario= $formEditarUsu->get('email')->getData();
+                $passwordUsuario= $formEditarUsu->get('password')->getData();
+
+                $em = $this->getDoctrine()->getManager();
+                $usuario = $em->getRepository('AppBundle:Usuarios')->find($idUsuario);
+                
+                if (!$usuario) {
+                    throw $this->createNotFoundException(
+                        'No usuario found for id '.$idUsuario
+                    );
+                }
+                
+                
+                //actualizamos los datos 
+                
+                $usuario->setIdusuarios($idUsuario);
+                $usuario->setNombre($nombreUsuario);
+                $usuario->setApellidos($apellidosUsuario);
+                $usuario->setEmail($emailUsuario);
+                $usuario->setFechanac($fechaUsuario);
+                $usuario->setPassword($passwordUsuario);
+                //lo persistimos
+                $em->flush();
             
-    if ($form->isSubmitted() && $form->isValid()) {
-            // $form->getData() holds the submitted values
-            // but, the original `$task` variable has also been updated
-            $usuario = $form->getData();
-            //para guardarlo en la  bd
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($usuario);
-            $em->flush();
+                return $this->redirect($this->generateUrl('paginaPrincipal'));
+                
+                
+            
+            }
 
-            return $this->redirectToRoute('catServicio');
-        }
-
-
-    //ahora hay  que pasar las fotos en bits y despues en base 64
+            
+    
+    
+            
 
 
-    //dump($categorias);
-        // replace this example code with whatever you need
+            
+
         
-            return $this->render('paginaPrincipal/pagina.html.twig',["categorias"=>$categorias,
-            'formRegistro' => $form->createView(),'numeroProductos'=>$numeroProductos,
-            'productos'=>$productos,"imagenCod"=>$imagenesCod,'formEditarPro'=>$formEditarPro->createView(),
-            'formNuevoProducto'=>$formNuevoProducto->createView(),"imagenCodV"=>$imagenesCodV,
-            "productosV"=>$productosV]
-            ); 
- }
+            
+                return $this->render('paginaPrincipal/pagina.html.twig',["categorias"=>$categorias,
+                'numeroProductos'=>$numeroProductos,'productos'=>$productos,"imagenCod"=>$imagenesCod,
+                'formEditarPro'=>$formEditarPro->createView(),"imagenCod1"=>$imagenesCod1,
+                'formNuevoProducto'=>$formNuevoProducto->createView(),"imagenCodV"=>$imagenesCodV,
+                "productosV"=>$productosV,"usuario"=>$usuario1,"fomEditarUsu"=>$formEditarUsu->createView()]
+                ); 
+            }
+            else{
+                return $this->redirect($this->generateUrl('catServicio'));
+
+            }
+        }
+      
+ 
 
      /**
      * @Route("/admin", name="admin")
@@ -339,6 +392,7 @@ class PaginaPrincipalController extends Controller
     public function productoCheckAction(Request $request){
         //variable que coge el texto del input
         $string=$request->get('idProducto');
+        
         //echo $string;
         //return users on json format
         $em = $this->getDoctrine()->getManager();
@@ -348,7 +402,7 @@ class PaginaPrincipalController extends Controller
         ->setParameter(':string',$string);
         $centro=$query->getResult();
 
-        //dump($centro);
+        dump($centro);
         
         //Codificadores XML y JSON
         $encoders = array(new XmlEncoder(), new JsonEncoder());
@@ -366,6 +420,8 @@ class PaginaPrincipalController extends Controller
         return $response;
 
     }
+
+    
 
    
 
@@ -412,5 +468,13 @@ class PaginaPrincipalController extends Controller
         //var_dump($response);
         return $response;
 
+    }
+
+    /**
+    * @Route("/logout", name="logout")
+    */
+    public function logoutAction(Request $request)
+    {
+    // UNREACHABLE CODE
     }
 }

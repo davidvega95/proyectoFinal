@@ -303,7 +303,9 @@ class LoginController extends Controller
         }
 
     }
+    $imagenesCod=null;
     foreach ($productos as $producto){
+      
        // dump($producto->getFoto());
        //guardamos en una variable cada una de las fotos de la bd
         $file=$producto->getFoto();
@@ -325,8 +327,9 @@ class LoginController extends Controller
         //creamos un array donde vamos a meter una array de imagenes codificados en base 64
         $imagenesCod[$producto->getIdproductos()]=$imagen;
         //$imagenesCod1[$producto->getIdproductos()]=$imagen1;
-
-    }
+        }
+        
+    
     
     /*
     foreach ($imagenesCod1 as $clave => $valor) {
@@ -340,6 +343,7 @@ class LoginController extends Controller
 
     //dump($categorias);
         // replace this example code with whatever you need
+        
         return $this->render('base.html.twig',["estado"=>$estado,"categorias"=>$categorias,"productos"=>$productos,
         "imagenCod"=>$imagenesCod,"imagenCod1"=>$imagenesCod1]
         );

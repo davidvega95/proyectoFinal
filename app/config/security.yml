@@ -13,12 +13,18 @@ security:
                 class: AppBundle:Usuarios
                 property: email
             
-
+    
     firewalls:
+        
+       
+       
+           
+        
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        
         main: 
             anonymous: ~
             http_basic: ~
@@ -26,10 +32,16 @@ security:
                 login_path: /catServ
                 check_path: /catServ
                 default_target_path: http://localhost/proyectofinal/proyectoThinder/web/app_dev.php/pagina
+               
+            logout:
+                path: /logout
+                target: /login
+            
             provider: db_provider
 
-
-    
+        
+        
+           
 
             # activate different ways to authenticate
 

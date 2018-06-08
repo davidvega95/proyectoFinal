@@ -27,6 +27,9 @@ html,body{
 }
 .container_uno{
     display: inline-block;
+    position: absolute;
+    left:50%;
+    margin-left: -30%;
 
 }
 .container_dos{
@@ -42,6 +45,20 @@ html,body{
 }
 .container_cuatro{
     display: inline-block;
+
+}
+.container_cinco{
+    display: inline-block;
+    position: absolute;
+    left:50%;
+    margin-left: -30%;
+
+}
+.container_seis{
+    display: inline-block;
+    position: absolute;
+    left:50%;
+    margin-left: -30%;
 
 }
 
@@ -243,6 +260,13 @@ div[id^='conversacion']{
     margin-bottom:3px; 
 }
 
+.formularioNuevoUsuario{
+    display: inline-block;
+    position: absolute;
+    left:50%;
+    margin-left: -30%;
+
+}
 
 
     

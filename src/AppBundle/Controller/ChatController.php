@@ -34,7 +34,7 @@ class ChatController extends Controller
         if(is_object($this->getUser())){
 
             $email=$this->getUser()->getUsername();
-            
+            $encontrado=false;
                     
             //coger primero el id de usuario que sea del gmail
             $em = $this->getDoctrine()->getManager();
@@ -91,7 +91,7 @@ class ChatController extends Controller
                 $encontrado=false;
             }
         }
-        dump($encontrado);
+        //dump($encontrado);
        
         if($encontrado==false){
            
@@ -107,7 +107,7 @@ class ChatController extends Controller
             $query1=$em->createQuery('SELECT u.nombre,p.descripcion,p.foto,c.idconversaciones,p.idproductos
             ,u.idusuarios from AppBundle:Conversaciones c,AppBundle:Usuarios u,
              AppBundle:Productos p  where c.id_usuarios=u.idusuarios  and p.idproductos=c.id_productos and  
-            c.id_usuarios1=:idusu')->setParameter(":idusu",$usuarioE[0]["idusuarios"]);
+             (c.id_usuarios1=:idusu or c.id_usuarios=:idusu)')->setParameter(":idusu",$usuarioE[0]["idusuarios"]);
             //ejecutamos sentencias
              $conversaciones=$query1->getResult();
             
@@ -199,7 +199,7 @@ class ChatController extends Controller
         $query1=$em->createQuery('SELECT u.nombre,p.descripcion,p.foto,c.idconversaciones,p.idproductos,u.idusuarios from AppBundle:Conversaciones c,AppBundle:Usuarios u,
         AppBundle:Productos p 
         where c.id_usuarios=u.idusuarios  and p.idproductos=c.id_productos and 
-        c.id_usuarios1=:idusu ')->setParameter(":idusu",$idUsuario);
+        (c.id_usuarios1=:idusu or c.id_usuarios=:idusu) ')->setParameter(":idusu",$idUsuario);
          //ejecutamos sentencias
          $conversaciones=$query1->getResult();
 
@@ -242,7 +242,7 @@ class ChatController extends Controller
              ->setParameter(":idconversaciones",$conversaciones[0]["idconversaciones"]);
              //ejecutamos sentencias
              $mensajes=$query2->getResult();
-             dump($mensajes);
+             //dump($mensajes);
    
              //mostrar el formulario para crear mensajes
               //creamos un formulario para el registro
@@ -327,7 +327,7 @@ class ChatController extends Controller
                 from AppBundle:Conversaciones c,AppBundle:Usuarios u,
                 AppBundle:Productos p 
                 where c.id_usuarios=u.idusuarios  and p.idproductos=c.id_productos and  
-                c.id_usuarios1=:idusu')->setParameter(":idusu",$usuarioE[0]["idusuarios"]);
+                (c.id_usuarios1=:idusu or c.id_usuarios=:idusu)')->setParameter(":idusu",$usuarioE[0]["idusuarios"]);
                  //ejecutamos sentencias
                  $conversaciones=$query1->getResult();
                  dump($conversaciones);
@@ -545,13 +545,13 @@ class ChatController extends Controller
                 ->setParameter(':string',$email);
                 
                 $usuario=$query->getResult();
-                dump($usuario);
+                //dump($usuario);
                 
                 //coger el usuario logueado
                 $usuario1 = $this->getDoctrine()
                 ->getRepository(Usuarios::class)
                 ->find($usuario[0]["idusuarios"]);
-                dump($usuario1);
+               // dump($usuario1);
                 
                 
                 $producto = new Productos();
@@ -566,7 +566,7 @@ class ChatController extends Controller
                 ->setParameter(':id',$usuario[0]["idusuarios"]);
                 //ejecutamos sentencias
                 $numeroProductos=$query1->getResult();
-                dump($numeroProductos);
+               // dump($numeroProductos);
         
                     $categorias=$this->getDoctrine()
                 ->getRepository("AppBundle\Entity\Categoriaproductos")
@@ -588,7 +588,7 @@ class ChatController extends Controller
                 ->setParameter(':id',$usuario[0]["idusuarios"]);
                 $productosV=$query3->getResult();
         
-                dump($productos);
+                //dump($productos);
                 //dump($categorias);
                 //pasamos las fotos de los usuarios a base 64
                 foreach($usuarios as $usuario){

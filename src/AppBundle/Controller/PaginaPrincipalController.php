@@ -56,16 +56,17 @@ class PaginaPrincipalController extends Controller
         ->setParameter(':string',$email);
         
         $usuario=$query->getResult();
-        dump($usuario);
+        //dump($usuario);
         
         //coger el usuario logueado
         $usuario1 = $this->getDoctrine()
         ->getRepository(Usuarios::class)
         ->find($usuario[0]["idusuarios"]);
-        dump($usuario1);
+        //dump($usuario1);
         
         
         $producto = new Productos();
+        
         //me creo el form del nuevo producto
         $formNuevoProducto = $this->createFormBuilder($producto)
         ->add('idproductos', HiddenType::class)
@@ -108,12 +109,15 @@ class PaginaPrincipalController extends Controller
             }
             
         }
-    
+
+       
         //me creo el form de Editar 
         $formEditarPro = $this->createFormBuilder($producto)
-        ->add('idproductos', HiddenType::class)
-        ->add('nombre', TextType::class)
+        ->add('idproductos', TextType::class)
         ->add('precio', TextType::class)
+        ->add('nombre', TextType::class, [
+            'attr' => ['class' => 'nombre'],
+        ])
         ->add('descripcion', TextType::class)
         ->add('actualizar', SubmitType::class, array('label' => 'Actualizar'))
         ->getForm();
@@ -121,11 +125,12 @@ class PaginaPrincipalController extends Controller
         //al darle al boton actualizar
         if($formEditarPro->isSubmitted() && $formEditarPro->isValid()){
             //cogemos los datos del formulario
+            
             $idProductos = $formEditarPro->get('idproductos')->getData();
             $nombreProductos= $formEditarPro->get('nombre')->getData();
             $descripcionProducto= $formEditarPro->get('descripcion')->getData();
             $precioProducto= $formEditarPro->get('precio')->getData();
-            $foto=$formEditarPro->get('foto')->getData();
+            //$foto=$formEditarPro->get('foto')->getData();
 
             $em = $this->getDoctrine()->getManager();
             $product = $em->getRepository('AppBundle:Productos')->find($idProductos);
@@ -153,7 +158,7 @@ class PaginaPrincipalController extends Controller
         ->setParameter(':id',$usuario[0]["idusuarios"]);
         //ejecutamos sentencias
         $numeroProductos=$query1->getResult();
-        dump($numeroProductos);
+        //dump($numeroProductos);
 
             $categorias=$this->getDoctrine()
         ->getRepository("AppBundle\Entity\Categoriaproductos")
@@ -175,7 +180,7 @@ class PaginaPrincipalController extends Controller
         ->setParameter(':id',$usuario[0]["idusuarios"]);
         $productosV=$query3->getResult();
 
-        dump($productos);
+        //dump($productos);
         //dump($categorias);
         //pasamos las fotos de los usuarios a base 64
         foreach($usuarios as $usuario){
@@ -248,9 +253,11 @@ class PaginaPrincipalController extends Controller
             ->add('idusuarios', HiddenType::class)
             ->add('nombre', TextType::class)
             ->add('apellidos', TextType::class)
-            ->add('fechaNac', DateType::class)
+            ->add('fechaNac', DateType::class, array(
+                // renders it as a single text box
+                'widget' => 'single_text',
+            ))
             ->add('email', TextType::class)
-            ->add('password', TextType::class)
             ->add('actualizar', SubmitType::class, array('label' => 'Actualizar'))
             ->getForm();
 
@@ -264,7 +271,7 @@ class PaginaPrincipalController extends Controller
                 $apellidosUsuario= $formEditarUsu->get('apellidos')->getData();
                 $fechaUsuario= $formEditarUsu->get('fechaNac')->getData();
                 $emailUsuario= $formEditarUsu->get('email')->getData();
-                $passwordUsuario= $formEditarUsu->get('password')->getData();
+                
 
                 $em = $this->getDoctrine()->getManager();
                 $usuario = $em->getRepository('AppBundle:Usuarios')->find($idUsuario);
@@ -283,7 +290,7 @@ class PaginaPrincipalController extends Controller
                 $usuario->setApellidos($apellidosUsuario);
                 $usuario->setEmail($emailUsuario);
                 $usuario->setFechanac($fechaUsuario);
-                $usuario->setPassword($passwordUsuario);
+             
                 //lo persistimos
                 $em->flush();
             

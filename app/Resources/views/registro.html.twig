@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<div class="container">
+
+                {{ form_start(nuevoUsuario) }}
+                {{ form_errors(nuevoUsuario) }}
+            
+                {{ form_widget(nuevoUsuario) }}
+               
+            
+                
+            {{ form_end(nuevoUsuario) }}
+    
+
+        </div>
+
+    
+
+
+
+
+
+{% endblock %}

@@ -29,8 +29,9 @@
                 data: {idProducto : idProducto}
             }).done  (function(response) 
                   {
+                      alert(response[0].nombre);
                     $("#form_idproductos").val(response[0].idproductos);
-                    $("#form_nombre").val(response[0].nombre);
+                    $(".nombre").val(response[0].nombre);
                      $("#form_precio").val(response[0].precio);
                      $("#form_descripcion").val(response[0].descripcion);
                     

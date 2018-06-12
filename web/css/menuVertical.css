@@ -19,7 +19,7 @@ html,body{
 .content-menu{
     width:150px;
     background: #161616;
-    height:100vh; 
+    height:200vh; 
     display: inline-block;
     float: left;
     
@@ -269,9 +269,15 @@ div[id^='conversacion']{
 }
 
 
-    
+#thinder{
+    color:white;
+    font-family: "Times New Roman", Times, serif;
+}
 
-
+.text3{
+    text-decoration: none;
+    color:white;
+}
 
 
 

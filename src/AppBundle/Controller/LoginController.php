@@ -8,6 +8,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use AppBundle\Entity\Categoriaproductos;
 use AppBundle\Entity\Productos;
 use AppBundle\Entity\Usuarios;
+use AppBundle\Entity\UsuariosHasRoles;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -20,6 +21,8 @@ use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class LoginController extends Controller
 {
@@ -122,31 +125,54 @@ class LoginController extends Controller
 
     }
     //creamos un formulario para el registro
-    $usuario = new Usuarios();
-    
-    $form = $this->createFormBuilder($usuario)
-            ->add('Nombre', TextType::class)
-            ->add('Apellidos', TextType::class)
-            ->add('password', TextType::class)
-            ->add('email', TextType::class)
-            ->add('nick', TextType::class)
-            ->add('FechaNac',  DateType::class)
-            ->add('guardar', SubmitType::class, array('label' => 'Enviar'))
-            ->getForm();
-
-    $form->handleRequest($request);
-            
-    if ($form->isSubmitted() && $form->isValid()) {
-            // $form->getData() holds the submitted values
-            // but, the original `$task` variable has also been updated
-            $usuario = $form->getData();
-            //para guardarlo en la  bd
-            $em = $this->getDoctrine()->getManager();
-             $em->persist($usuario);
-             $em->flush();
-    
-            return $this->redirectToRoute('catServicio');
+    //formulario para nuevo usuario
+    $usuario1 = new Usuarios();
+    //me creo el form del nuevo producto
+    $formNuevoUsuario = $this->createFormBuilder($usuario1)
+    ->add('idusuarios', HiddenType::class)
+    ->add('nombre', TextType::class)
+    ->add('apellidos', TextType::class)
+    ->add('email', TextType::class)
+    ->add('password', TextType::class)
+    ->add('nick', TextType::class)
+    ->add('fechanac', DateType::class, array(
+        // renders it as a single text box
+        'widget' => 'single_text',
+    ))
+    ->add('foto', FileType::class,array(
+        "label" => "Imagen:",
+        "attr" =>array("class" => "form-control")
+    ))
+    ->add('graBar', SubmitType::class, array('label' => 'Guardar'))
+    ->getForm();
+    $formNuevoUsuario->handleRequest($request);
+   
+    if($formNuevoUsuario->isSubmitted()){
+        
+        $foto = $formNuevoUsuario->get('foto')->getData();
+        if(file_exists ($foto)){
+        //pasamos el archivo a binario
+        $foto1=file_get_contents($foto);
+        //echo $foto1;
+        //obtenemos los datos del formulario en un objeto productos
+        $usuario->setApellidos($formNuevoUsuario->get('apellidos')->getData());
+        $usuario->setNombre($formNuevoUsuario->get('nombre')->getData());
+        $usuario->setEmail($formNuevoUsuario->get('email')->getData());
+        $usuario->setFoto($foto1);
+        $usuario->setPassword($formNuevoUsuario->get('password')->getData());
+        $usuario->setNick($formNuevoUsuario->get('nick')->getData());
+        $usuario->setFechanac($formNuevoUsuario->get('fechanac')->getData());
+        
+        //var_dump($formNuevoProducto->get('usuariosusuarios')->getData());
+        
+        $em=$this->getDoctrine()->getManager();
+        //lo guardamos en la base de datos
+        $em->persist($usuario);
+        $em->flush();
+        return $this->redirect($this->generateUrl('gestionUsuarios'));
         }
+    }
+
     
     
     //ahora hay  que pasar las fotos en bits y despues en base 64
@@ -155,9 +181,110 @@ class LoginController extends Controller
     //dump($categorias);
         // replace this example code with whatever you need
         return $this->render('base.html.twig',["estado"=>$estado,"categorias"=>$categorias,"productos"=>$productos,
-        "imagenCod"=>$imagenesCod,"imagenCod1"=>$imagenesCod1,'formRegistro' => $form->createView()]
+        "imagenCod"=>$imagenesCod,"imagenCod1"=>$imagenesCod1,'nuevoUsuario' => $formNuevoUsuario->createView()]
         );
     }
+
+
+     /**
+     * @Route("/registro", name="registroUsuario")
+     */
+
+    public function registroAction(Request $request)
+    {  
+        //mostrar las categorias en el menú
+        //inicializamos la entidad categorias
+        if (is_object($this->getUser())) {
+            return $this->redirectToRoute('paginaPrincipal');
+        }
+        $categorias=$this->getDoctrine()
+    ->getRepository("AppBundle\Entity\Categoriaproductos")
+    ->findAll();
+    //inicializamos la entidad estado para que no salga nulo 
+    //mostrar productos en el body
+    
+
+    
+    //creamos un formulario para el registro
+    //formulario para nuevo usuario
+    $usuario = new Usuarios();
+    //me creo el form del nuevo producto
+    $formNuevoUsuario = $this->createFormBuilder($usuario)
+    ->add('idusuarios', HiddenType::class)
+    ->add('nombre', TextType::class)
+    ->add('apellidos', TextType::class)
+    ->add('email', TextType::class)
+    ->add('password', TextType::class)
+    ->add('nick', TextType::class)
+    ->add('fechanac', DateType::class, array(
+        // renders it as a single text box
+        'widget' => 'single_text',
+    ))
+    ->add('foto', FileType::class,array(
+        "label" => "Imagen:",
+        "attr" =>array("class" => "form-control")
+    ))
+    ->add('grabar', SubmitType::class, array('label' => 'Guardar'))
+    ->getForm();
+    $formNuevoUsuario->handleRequest($request);
+   
+    if($formNuevoUsuario->isSubmitted() && $formNuevoUsuario->isValid()){
+       
+        $foto = $formNuevoUsuario->get('foto')->getData();
+        if(file_exists ($foto)){
+        //pasamos el archivo a binario
+        $foto1=file_get_contents($foto);
+        //echo $foto1;
+        //obtenemos los datos del formulario en un objeto productos
+        $idUsuarios=$usuario->setIdusuarios($formNuevoUsuario->get('idusuarios')->getData());
+        $usuario->setApellidos($formNuevoUsuario->get('apellidos')->getData());
+        $usuario->setNombre($formNuevoUsuario->get('nombre')->getData());
+        $usuario->setEmail($formNuevoUsuario->get('email')->getData());
+        $usuario->setFoto($foto1);
+        //contrasenia
+        $password=$formNuevoUsuario->get('password')->getData();
+        //$usuario->setPassword($formNuevoUsuario->get('password')->getData());
+        //para escribir la contrasenia en bcrypt
+        $contraseniaCrypt=password_hash($password,PASSWORD_DEFAULT);
+        $usuario->setPassword($contraseniaCrypt);
+        $usuario->setNick($formNuevoUsuario->get('nick')->getData());
+        $usuario->setFechanac($formNuevoUsuario->get('fechanac')->getData());
+        $nick=$formNuevoUsuario->get('nick')->getData();
+        //var_dump($formNuevoProducto->get('usuariosusuarios')->getData());
+        
+        
+        $em=$this->getDoctrine()->getManager();
+        //lo guardamos en la base de datos
+        $em->persist($usuario);
+        $em->flush();
+        //buscar el usuario nuevo para crear el role
+        $query=$em->createQuery('SELECT u.idusuarios FROM AppBundle:Usuarios u WHERE u.nick  LIKE :string')
+        ->setParameter(':string',$nick);
+        $usuariosR=$query->getResult();
+        dump($usuariosR);
+        $roles=new UsuariosHasRoles();
+        $roles->setidusuarios($usuariosR[0]["idusuarios"]);
+        $roles->setidroles(2);
+        
+        
+        $em->persist($roles);
+        
+        $em->flush();
+        return $this->redirect($this->generateUrl('catServicio'));
+        }
+    }
+
+    
+    
+    //ahora hay  que pasar las fotos en bits y despues en base 64
+
+
+    //dump($categorias);
+        // replace this example code with whatever you need
+        return $this->render('registro.html.twig',["categorias"=>$categorias,'nuevoUsuario' => $formNuevoUsuario->createView()]
+        );
+    }
+
 
      /**
      * @Route("/imagen/{id}", name="imagen")

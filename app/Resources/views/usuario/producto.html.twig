@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 <div class=" detalle_body container">
-    <h1>Detalle del producto</h1>
+    
         <div class="info_usuario">
                 <div class="foto_usuario" style="background-image: url('data:image/jpeg;base64,{{imagenCod1[usuario.idusuarios] }}'
                 )">
                
-        </div>
+                </div>
         <span class="nombreUsuario">{{usuario.nombre}}</span>
         <div class="numero_productos">
             <span>{{numProductosUsuario[0][1]}}</span>
@@ -32,13 +32,11 @@
     </div>
     <h1>{{producto.nombre}}</h1>
     <hr>
-    <p>{{producto.descripcion}}</p><hr>
+    <p class="desc">{{producto.descripcion}}</p><hr>
     <div class="fecha_publicacion">
         {{producto.fechapublicacion.date}}
     </div>
-    <div class="ubicacion">
-        <h1>Aqui la ubiación</h1>
-    </div>
+    
     </div>
 
 

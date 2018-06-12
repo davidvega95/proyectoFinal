@@ -57,6 +57,7 @@
                 {% for producto in productos %}
                 
                 <div class="producto{{producto.idproductos}}">
+                    <div class="infopro">
                         <a class="detalle_producto" href="{{url("detalle_producto",{"id_producto":producto.idproductos,"id_usuario":producto.usuariosusuarios.idusuarios})}}">
                     <img width="200" height="200" src="data:image/jpeg;base64,{{imagenCod[producto.idproductos]}}"/></br>
                     <span class="precio">{{producto.precio}}€</span></br>
@@ -72,6 +73,7 @@
                             {% endif %}
                     <a class="ver btn btn-success" href="{{url("imagen",{"id":producto.idproductos})}}">Ver producto</a>
                     <hr>
+                </div>
                 </a>
                     <a  href="{{url("usuario",{"id":producto.usuariosusuarios.idusuarios})}}">
                     <div class="usuarios_producto">

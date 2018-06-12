@@ -4,8 +4,8 @@
 <main>
     
     <div class="content-menu">
-        <li onclick="abrirDiv1()"><span class="lnr lnr-home icon1"></span><h4 class="text1">PERFIL</h4></li>
-        <li onclick="abrirDiv2()"><span class="lnr film-play icon2"></span><h4 class="text2">PRODUCTOS</h4></li>
+        <li onclick="abrirDiv1()"><span class="lnr lnr-home icon1"></span><a class="text1">PERFIL</a></li>
+        <li onclick="abrirDiv2()"><span class="lnr film-play icon2"></span><a class="text2">PRODUCTOS</a></li>
         {% if productos[0] is defined %}
         <li><span class="lnr lnr-store icon3"></span>
             
@@ -13,11 +13,11 @@
             {% endif %}
         <li onclick="abrirDiv4()"><span class="lnr lnr-picture icon4"></span><h4  class="text4">FAVORITOS</h4></li>
         {% if app.user.rolesroles[0]=="Admin" %}
-            <li><span class="lnr lnr-home icon1"></span><h4 class="text1">
+            <li><span class="lnr lnr-home icon1"></span>
                     <a href=" {{path('gestionUsuarios')}}"  class="text3">Gestión Usuarios</a>    
             
             </li>
-            <li><span class="lnr lnr-home icon1"></span><h4 class="text1">
+            <li><span class="lnr lnr-home icon1"></span>
                 <a href=" {{path('gestionCategorias')}}"  class="text3">Gestión Categorias</a>    
         
         </li>

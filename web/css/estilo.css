@@ -5,31 +5,19 @@
 html,body{
   margin:0px;
   padding:0px;
+  background-color: rgba(236,239,241,.6);
    
   
 }
 
-div[class^='producto'] {
-  
-  padding: 20px;
-  float: left;
-  width: 33.33%;
-  height: 500px;
-  margin: auto;
-  border: 2px solid red;
-  
-  border-radius: 25px;
-   font-weight: 900;
-   font-size: 20px;
-}
 
 div[class^='producto'] {
-  
-  padding: 20px;
+  margin-top: 2%;
+  padding: auto;
   float: left;
   width: 33.33%;
-  height: 500px;
-  margin: auto;
+  height: auto;
+  
   border: 2px solid red;
   
   border-radius: 25px;
@@ -43,8 +31,19 @@ div[class^='producto'] {
 }
 .detalle_precio{
   color:#669999;
-  font-size: 40px;
+  font-size: 3.2rem;
+  font-family: WallieChunky,sans-serif;
+  display: inline-block;
+  
+}
 
+.desc{
+  line-height: 1.4em;
+  color: #333;
+  margin: 2rem 0;
+  padding: 0 0 2rem;
+  border-bottom: 1px solid #ECEFF1;
+  word-wrap: break-word;
 }
 
 .escribir{
@@ -61,19 +60,19 @@ div[class^='producto'] {
 }
 
 @media (max-width:1000px) {
-  .productos {
+  div[class^='productos'] {
       width: 50%;
   }
-  .producto {
+  div[class^='producto'] {
     width: 50%;
 }
 }
 
-@media (max-width:500px) {
-  .productos {
+@media (max-width:800px) {
+  div[class^='productos'] {
       width: 100%;
   }
-  .producto {
+  div[class^='producto'] {
     width: 100%;
 }
 }
@@ -100,29 +99,40 @@ div.foto_usuario {
 .usuarios_producto:hover{
   text-decoration: none;
   background-color:#999999;
+  margin:0px auto;
+  padding:0;
+  width: auto;
+  border-radius: 25px;
   
 
 }
-div[class^='producto']:hover{
-  text-decoration: none;
-  background-color:#999999;
 
-}
 
 .nombreUsuario{
-  color:black;
-  font-weight:bold;
-  text-transform: uppercase;
-  float: top;
+  color: #6a6a6a;
+  font-size: 1.6rem;
+ 
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 180px
+  
 }
 
+
 .info_usuario{
-  border: 2px solid red;
+  background-color: #FFF;
+ 
+  
+  
 }
 
 .numero_productos{
   display: inline-block;
   margin-left: 40px;
+  font-size: 1.6rem;
+  margin-top: 1rem;
+  color: #b5b5b5;
 
 }
 .chat_usuario{
@@ -131,7 +141,11 @@ div[class^='producto']:hover{
 }
 .detalle_body{
   width: 50%;
-  margin-left:300px;
+  margin-top: 2%;
+  margin-left:20%;
+  background-color: #FFF;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,.1), 0 2px 5px 0 transparent;
+  text-align: center;
   
 
 }
@@ -144,4 +158,21 @@ div[class^='producto']:hover{
 
 .detalle_producto:hover{
   text-decoration: none;
+}
+
+.infopro:hover{
+
+  background-color:#999999;
+
+}
+
+.infopro{
+  text-align: center;
+  border-radius: 25px;
+  width:auto;
+  
+}
+
+#formUsu{
+  text-align: center;
 }

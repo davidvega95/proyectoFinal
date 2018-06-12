@@ -4,20 +4,20 @@
 <main>
     
     <div class="content-menu">
-        <li onclick="abrirDiv1()"><span class="lnr lnr-home icon1"></span><h4 class="text1">PERFIL</h4></li>
-        <li><span class="lnr lnr-home icon1"></span><h4 class="text1">
+        <li onclick="abrirDiv1()"><span class="lnr lnr-home icon1"></span>PERFIL</li>
+        <li><span class="lnr lnr-home icon1"></span>
             <a href=" {{path('paginaPrincipal')}}"  class="text3">PRODUCTOS</a>    
     
     </li>
         <li><span class="lnr lnr-store icon3"></span>
             <a href=" {{path('chatPrincipal',{'idUsuario':productos[0].usuariosusuarios.idusuarios})}}"  class="text3">MENSAJES</a></li>
-        <li onclick="abrirDiv4()"><span class="lnr lnr-picture icon4"></span><h4  class="text4">FAVORITOS</h4></li>
+        <li onclick="abrirDiv4()"><span class="lnr lnr-picture icon4"></span>FAVORITOS</li>
         {% if app.user.rolesroles[0]=="Admin" %}
-            <li><span class="lnr lnr-home icon1"></span><h4 class="text1">
+            <li><span class="lnr lnr-home icon1"></span>
                     <a href=" {{path('gestionUsuarios')}}"  class="text3">Gestión Usuarios</a>    
             
             </li>
-            <li><span class="lnr lnr-home icon1"></span><h4 class="text1">
+            <li><span class="lnr lnr-home icon1"></span>
                 <a href=" {{path('gestionCategorias')}}"  class="text3">Gestión Categorias</a>    
         
         </li>

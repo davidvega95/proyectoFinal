@@ -11,7 +11,7 @@
             
             <a href=" {{path('chatPrincipal',{'idUsuario':productos[0].usuariosusuarios.idusuarios})}}"  class="text3">MENSAJES</a></li>
             {% endif %}
-        <li onclick="abrirDiv4()"><span class="lnr lnr-picture icon4"></span><h4  class="text4">FAVORITOS</h4></li>
+        
         {% if app.user.rolesroles[0]=="Admin" %}
             <li><span class="lnr lnr-home icon1"></span>
                     <a href=" {{path('gestionUsuarios')}}"  class="text3">Gestión Usuarios</a>    
@@ -103,12 +103,12 @@
                            
                             {% for producto in productosV %}
                             <tr>
-                                <td><input type="checkbox" class="form-check-input" id="checkbox{{producto.idproductos}}" style="display:none"></td>
+                                <td><input type="checkbox" class="form-check-input" id="checkboxV{{producto.idproductos}}" style="display:none"></td>
                                 <td><img width="200" height="200" src="data:image/jpeg;base64,{{imagenCodV[producto.idproductos]}}"/></td>
                                 <td>{{producto.precio}}€</td>
                                 <td>{{producto.nombre}}</td>
                                 
-                                <td><button id="formBorrar{{producto.idproductos}}" type="button" class="btn btn-danger">Borrar</button></td>
+                                <td><button id="formBorrarV{{producto.idproductos}}" type="button" class="btn btn-danger">Borrar</button></td>
                             </tr>
                             {% endfor %}
                         
@@ -144,9 +144,10 @@
             <div class="formularioNuevoProducto">
                 <h1>Nuevo Producto</h1>
                 {{ form_start(formNuevoProducto) }}
+                {{ form_widget(formNuevoProducto) }}
                 {{ form_errors(formNuevoProducto) }}
             
-                {{ form_widget(formNuevoProducto) }}
+               
                
             
                 

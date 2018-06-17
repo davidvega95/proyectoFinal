@@ -4,6 +4,8 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Productos
@@ -26,6 +28,8 @@ class Productos
      * @var float
      *
      * @ORM\Column(name="precio", type="float", precision=10, scale=0, nullable=false)
+     *  @Assert\NotBlank(message="El campo body no puede estar vacío")
+     * 
      */
     private $precio;
 
@@ -33,6 +37,7 @@ class Productos
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=100, nullable=false)
+     * @Assert\NotBlank(message="El campo body no puede estar vacío")
      */
     private $nombre;
 
@@ -40,6 +45,7 @@ class Productos
      * @var string
      *
      * @ORM\Column(name="descripcion", type="string", length=300, nullable=true)
+     * @Assert\NotBlank(message="El campo body no puede estar vacío")
      */
     private $descripcion;
 
@@ -47,6 +53,7 @@ class Productos
      * @var string
      *
      * @ORM\Column(name="foto", type="blob", nullable=false)
+     * 
      */
     private $foto;
 

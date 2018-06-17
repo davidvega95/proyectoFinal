@@ -30,13 +30,11 @@
           </form>
       </ul>
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="btn btn-success" href="#">Mensajes <span class="sr-only">(current)</span></a>
-        </li>
+        
         
         <li class="nav-item">
             {% if app.user %}
-            <h1>{{ app.user.username }}</h1>
+           
             <a type="button" href="{{ path('paginaPrincipal') }}" class="btn btn-primary">
                 Mi zona
             </a>
@@ -47,9 +45,7 @@
               {% endif %}
         </li>
        
-        <li class="nav-item">
-            <a class="btn btn-success" href="#">Subir producto</a>
-          </li>
+      
         
       </ul>
     </div>
@@ -68,7 +64,7 @@
           <!-- Modal body -->
           <div class="modal-body">
               
-            <div class="form-group"><a type="button"  class="btn btn-info"  style="margin-left:25%;width:50%;"  id="registrarse">Regístrate</a></div>
+            <div class="form-group"><a type="button" href="{{ path('registroUsuario') }}"  class="btn btn-info"  style="margin-left:25%;width:50%;"  id="registrarse">Regístrate</a></div>
 
             <button type="button" style="display:none;" id="atras" onclick="volverAtras()">
               Atras</button>

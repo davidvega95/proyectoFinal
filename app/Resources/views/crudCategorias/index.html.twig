@@ -14,7 +14,7 @@
                 
                 <a href=" {{path('chatPrincipal',{'idUsuario':productos[0].usuariosusuarios.idusuarios})}}"  class="text3">MENSAJES</a></li>
                 {% endif %}
-        <li onclick="abrirDiv4()"><span class="lnr lnr-picture icon4"></span>FAVORITOS</li>
+        
         {% if app.user.rolesroles[0]=="Admin" %}
         <li><span class="lnr lnr-home icon1"></span>
                 <a href=" {{path('gestionUsuarios')}}"  class="text4">Gestión Usuarios</a>    

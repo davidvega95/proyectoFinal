@@ -417,8 +417,8 @@ class LoginController extends Controller
     $query=$em->createQuery('SELECT p FROM AppBundle:Productos p WHERE IDENTITY(p.categoriaproductoscategoriaproductos)  LIKE :string')
     ->setParameter(':string',$idCategoria);
     $productos=$query->getResult();
-    dump($productos);
-    dump($categorias);
+    //dump($productos);
+    //dump($categorias);
     //pasamos las fotos de los usuarios a base 64
     foreach($usuarios as $usuario){
         $file1=$usuario->getFoto();

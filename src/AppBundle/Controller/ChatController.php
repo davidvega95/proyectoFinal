@@ -330,7 +330,7 @@ class ChatController extends Controller
                 (c.id_usuarios1=:idusu or c.id_usuarios=:idusu)')->setParameter(":idusu",$usuarioE[0]["idusuarios"]);
                  //ejecutamos sentencias
                  $conversaciones=$query1->getResult();
-                 dump($conversaciones);
+                 //dump($conversaciones);
                  
                 
         
@@ -369,7 +369,7 @@ class ChatController extends Controller
                     where c.idconversaciones=:id and p.idproductos=c.id_productos')->setParameter(":id",$idconversacion);
                      //ejecutamos sentencias
                      $conversation=$query5->getResult();
-                     dump($conversation);
+                    // dump($conversation);
                      
            
                     //mostrar chat
@@ -379,7 +379,7 @@ class ChatController extends Controller
                      ->setParameter(":idconversaciones",$idconversacion);
                      //ejecutamos sentencias
                      $mensajes=$query2->getResult();
-                     dump($mensajes);
+                     //dump($mensajes);
            
                      //mostrar el formulario para crear mensajes
                       //creamos un formulario para el registro
@@ -534,6 +534,7 @@ class ChatController extends Controller
             if (is_object($this->getUser())) {
                 $imagenesCodV=null;
                 $email=$this->getUser()->getUsername();
+                $imagenesCod=null;
         
                 
                 //coger primero el id de usuario que sea del gmail
@@ -661,9 +662,12 @@ class ChatController extends Controller
                     ->add('idusuarios', HiddenType::class)
                     ->add('nombre', TextType::class)
                     ->add('apellidos', TextType::class)
-                    ->add('fechaNac', DateType::class)
+                    ->add('fechaNac', DateType::class, array(
+                        // renders it as a single text box
+                        'widget' => 'single_text',
+                    ))
                     ->add('email', TextType::class)
-                    ->add('password', TextType::class)
+                    ->add('password', HiddenType::class)
                     ->add('actualizar', SubmitType::class, array('label' => 'Actualizar'))
                     ->getForm();
         

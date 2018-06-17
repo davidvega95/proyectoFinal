@@ -9,9 +9,14 @@
             <a href=" {{path('paginaPrincipal')}}"  class="text3">PRODUCTOS</a>    
     
     </li>
-        <li><span class="lnr lnr-store icon3"></span>
-            <a href=" {{path('chatPrincipal',{'idUsuario':productos[0].usuariosusuarios.idusuarios})}}"  class="text3">MENSAJES</a></li>
-        <li onclick="abrirDiv4()"><span class="lnr lnr-picture icon4"></span>FAVORITOS</li>
+
+    {% if productos[0] is defined %}
+    <li><span class="lnr lnr-store icon3"></span>
+        
+        <a href=" {{path('chatPrincipal',{'idUsuario':productos[0].usuariosusuarios.idusuarios})}}"  class="text3">MENSAJES</a></li>
+    {% endif %}
+       
+        
         {% if app.user.rolesroles[0]=="Admin" %}
             <li><span class="lnr lnr-home icon1"></span>
                     <a href=" {{path('gestionUsuarios')}}"  class="text3">Gestión Usuarios</a>    

@@ -13,7 +13,7 @@
         <li><span class="lnr lnr-store icon3"></span>
             <a href=" {{path('chat', {'idProducto': conversaciones[0].idproductos,'idUsuario': conversaciones[0].idusuarios}) }}"  class="text3">MENSAJES</a></li>
         {% endif %}
-        <li onclick="abrirDiv4()"><span class="lnr lnr-picture icon4"></span>FAVORITOS</li>
+        
         {% if app.user.rolesroles[0]=="Admin" %}
             <li><span class="lnr lnr-home icon1"></span>
                     <a href=" {{path('gestionUsuarios')}}"  class="text3">Gestión Usuarios</a>    
@@ -56,7 +56,7 @@
                          <div id="{{mensaje.idmensajes}}">
                             <span name="nombreUsuario" style="color:#1c62c4;">{{mensaje.nombre}}</span>
                             <span name="mensaje" style="color:#848484;">{{mensaje.mensaje}}</span>
-                            <span name="hora" style="float:right;">10:04 am</span>
+                            
                         </div>
                             
                             {% endfor %}

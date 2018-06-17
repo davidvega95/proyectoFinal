@@ -17,6 +17,7 @@ div[class^='producto'] {
   float: left;
   width: 33.33%;
   height: auto;
+  text-align:center;
   
   border: 2px solid red;
   

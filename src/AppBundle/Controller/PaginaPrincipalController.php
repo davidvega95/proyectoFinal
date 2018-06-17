@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\Usuarios;
 use AppBundle\Entity\Productos;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\HttpFoundation\Request;
@@ -71,7 +72,7 @@ class PaginaPrincipalController extends Controller
         $formNuevoProducto = $this->createFormBuilder($producto)
         ->add('idproductos', HiddenType::class)
         ->add('nombre', TextType::class)
-        ->add('precio', TextType::class)
+        ->add('precio', NumberType::class)
         ->add('descripcion', TextType::class)
         ->add('categoriaproductoscategoriaproductos')
         ->add('estadoproductoestadoproducto')

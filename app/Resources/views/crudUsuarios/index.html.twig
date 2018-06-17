@@ -13,7 +13,7 @@
                 
                 <a href=" {{path('chatPrincipal',{'idUsuario':productos[0].usuariosusuarios.idusuarios})}}"  class="text3">MENSAJES</a></li>
                 {% endif %}
-        <li onclick="abrirDiv4()"><span class="lnr lnr-picture icon4"></span>>FAVORITOS</li>
+      
         {% if app.user.rolesroles[0]=="Admin" %}
         <li><span class="lnr lnr-home icon1"></span>
                 <a href=" {{path('gestionUsuarios')}}"  class="text4">Gestión Usuarios</a>    
@@ -48,7 +48,7 @@
                     </tr>
                     {% for usuario in usuarios %}
                     <tr>
-                        <td><input type="checkbox" class="form-check-input" id="checkbox{{usuario.idusuarios}}" style="display:none"></td>
+                        <td><input type="checkbox" class="form-check-input" id="checkboxU{{usuario.idusuarios}}" style="display:none"></td>
                         {% if usuario.foto is not null %}
                         <td><img width="200" height="200" src="data:image/jpeg;base64,{{imagenCod1[usuario.idusuarios]}}"/></td>
                         {% else %}

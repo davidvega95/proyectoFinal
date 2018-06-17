@@ -21,7 +21,7 @@
             var oID = $(this).attr("id");
             var regex = /(\d+)/g;
             var idProducto=oID.match(regex);
-            alert(idProducto);
+            
             $.ajax({
                 type: "GET",
                 url: "http://localhost/proyectofinal/proyectoThinder/web/app_dev.php/pagina/idProducto",
@@ -29,7 +29,8 @@
                 data: {idProducto : idProducto}
             }).done  (function(response) 
                   {
-                      alert(response[0].nombre);
+                    
+                    
                     $("#form_idproductos").val(response[0].idproductos);
                     $(".nombre").val(response[0].nombre);
                      $("#form_precio").val(response[0].precio);
@@ -46,7 +47,7 @@
     
                   .fail  (function(response) 
                   {
-                      alert("entra");
+                    
                       
                     console.log(JSON.stringify(response));
                   }
@@ -59,22 +60,22 @@
 
             
           });
-          $("input[id^=checkbox]").change(function(){
+          $("input[id^=checkboxU]").change(function(){
               //cogemos id del producto
             
               var oID = $(this).attr("id");
               var regex = /(\d+)/g;
               var idUsuario=oID.match(regex);
-              alert(idUsuario);
-            if($("#checkbox"+idUsuario).attr('checked')){
-                //alert("entra aquiiii");
-                $("#checkbox"+idUsuario).removeAttr("checked");
+             
+            if($("#checkboxU"+idUsuario).attr('checked')){
+                
+                $("#checkboxU"+idUsuario).removeAttr("checked");
 
             }
             
             //si el checkbox está atrue
-            if( $("#checkbox"+idUsuario).is(':checked') ) {
-                alert(idUsuario);
+            if( $("#checkboxU"+idUsuario).is(':checked') ) {
+                
                 $.ajax({
                     type: "GET",
                     url: "http://localhost/proyectofinal/proyectoThinder/web/app_dev.php/usuarioR/check",
@@ -82,8 +83,7 @@
                     data: {idUsuario : idUsuario}
                 }).done  (function(response) 
                       {
-                        alert("entra---------");
-                          //alert("entra en producto checqueado");
+                        
                           $("#nombreC").append('<p>'+response[0].nombre+'</p>');
                          
         
@@ -91,7 +91,7 @@
         
                       .fail  (function(response) 
                       {
-                          alert("entra");
+                   
                           
                         console.log(JSON.stringify(response));
                       }
@@ -101,12 +101,12 @@
                 else {
                     $.ajax({
                         type: "GET",
-                        url: "http://localhost/proyectofinal/proyectoThinder/web/app_dev.php/usuarioR/checkk",
+                        url: "http://localhost/proyectofinal/proyectoThinder/web/app_dev.php/usuarioR/check",
                         dataType: "json",
                         data: {idUsuario : idUsuario}
                     }).done  (function(response) 
                           {
-                              //alert("entra en producto no chekeado");
+                             
                               $("p").remove(":contains("+response[0].nombre+")");
                              
             
@@ -114,7 +114,7 @@
             
                           .fail  (function(response) 
                           {
-                              alert("entra");
+                              
                               
                             console.log(JSON.stringify(response));
                           }
@@ -124,6 +124,72 @@
                 }
                 
             });
+
+
+            $("input[id^=checkboxV]").change(function(){
+                //cogemos id del producto
+              
+                var oID = $(this).attr("id");
+                var regex = /(\d+)/g;
+                var idProducto=oID.match(regex);
+               
+              if($("#checkboxV"+idProducto).attr('checked')){
+                  
+                  $("#checkboxV"+idProducto).removeAttr("checked");
+  
+              }
+              
+              //si el checkbox está atrue
+              if( $("#checkboxV"+idProducto).is(':checked') ) {
+                  
+                  $.ajax({
+                      type: "GET",
+                      url: "http://localhost/proyectofinal/proyectoThinder/web/app_dev.php/producto/check",
+                      dataType: "json",
+                      data: {idProducto : idProducto}
+                  }).done  (function(response) 
+                        {
+                          
+                            $("#nombre").append('<p>'+response[0].nombre+'</p>');
+                           
+          
+                        } )
+          
+                        .fail  (function(response) 
+                        {
+                     
+                            
+                          console.log(JSON.stringify(response));
+                        }
+          
+                      );
+                  }
+                  else {
+                      $.ajax({
+                          type: "GET",
+                          url: "http://localhost/proyectofinal/proyectoThinder/web/app_dev.php/producto/check",
+                          dataType: "json",
+                          data: {idProducto : idProducto}
+                      }).done  (function(response) 
+                            {
+                               
+                                $("p").remove(":contains("+response[0].nombre+")");
+                               
+              
+                            } )
+              
+                            .fail  (function(response) 
+                            {
+                                
+                                
+                              console.log(JSON.stringify(response));
+                            }
+              
+                          );
+  
+                  }
+                  
+              });
             
             $("input[id^=checkboxC]").change(function(){
                 //cogemos id del producto
@@ -131,9 +197,9 @@
                 var oID = $(this).attr("id");
                 var regex = /(\d+)/g;
                 var idProducto=oID.match(regex);
-                alert(idProducto);
+               
               if($("#checkboxC"+idProducto).attr('checked')){
-                  //alert("entra aquiiii");
+                  
                   $("#checkboxC"+idProducto).removeAttr("checked");
   
               }
@@ -147,7 +213,7 @@
                       data: {idProducto : idProducto}
                   }).done  (function(response) 
                         {
-                            //alert("entra en producto checqueado");
+                            
                             $("#nombreC").append('<p>'+response[0].nombre+'</p>');
                            
           
@@ -155,7 +221,7 @@
           
                         .fail  (function(response) 
                         {
-                            alert("entra");
+                          
                             
                           console.log(JSON.stringify(response));
                         }
@@ -170,7 +236,7 @@
                           data: {idProducto : idProducto}
                       }).done  (function(response) 
                             {
-                                //alert("entra en producto no chekeado");
+                                
                                 $("p").remove(":contains("+response[0].nombre+")");
                                
               
@@ -178,7 +244,7 @@
               
                             .fail  (function(response) 
                             {
-                                alert("entra");
+                                
                                 
                               console.log(JSON.stringify(response));
                             }
@@ -196,9 +262,9 @@
                 var oID = $(this).attr("id");
                 var regex = /(\d+)/g;
                 var idProducto=oID.match(regex);
-                alert(idProducto);
+                
               if($("#checkboxP"+idProducto).attr('checked')){
-                  //alert("entra aquiiii");
+                  
                   $("#checkboxP"+idProducto).removeAttr("checked");
   
               }
@@ -212,7 +278,7 @@
                       data: {idProducto : idProducto}
                   }).done  (function(response) 
                         {
-                            //alert("entra en producto checqueado");
+                            
                             $("#nombre").append('<p>'+response[0].nombre+'</p>');
                            
           
@@ -220,7 +286,7 @@
           
                         .fail  (function(response) 
                         {
-                            alert("entra");
+                           
                             
                           console.log(JSON.stringify(response));
                         }
@@ -235,7 +301,7 @@
                           data: {idProducto : idProducto}
                       }).done  (function(response) 
                             {
-                                //alert("entra en producto no chekeado");
+                                
                                 $("p").remove(":contains("+response[0].nombre+")");
                                
               
@@ -243,7 +309,7 @@
               
                             .fail  (function(response) 
                             {
-                                alert("entra");
+                               
                                 
                               console.log(JSON.stringify(response));
                             }
@@ -263,7 +329,7 @@
                 var oID = $(this).attr("id");
                 var regex = /(\d+)/g;
                 var idProducto=oID.match(regex);
-                alert(idProducto);
+                
                  //checkea al producto que le ha dado borrar
                  $("#checkboxP"+idProducto).attr('checked', true);  
                  //$("#checkbox"+idProducto).css({"display": "block"});
@@ -292,7 +358,7 @@
                 data: {idProducto : idProducto}
             }).done  (function(response) 
                   {
-                      alert("entra en ajax");
+                      
                       $("#nombre").append('<p>'+response[0].nombre+'</p>');
                      
     
@@ -300,13 +366,108 @@
     
                   .fail  (function(response) 
                   {
-                      alert("entra");
+                     
                       
                     console.log(JSON.stringify(response));
                   }
     
                 );
             });
+
+
+            $( "button[id^=formBorraV]" ).click(function() {
+                
+                     
+                    var oID = $(this).attr("id");
+                    var regex = /(\d+)/g;
+                    var idProducto=oID.match(regex);
+                   
+                     //checkea al producto que le ha dado borrar
+                     $("#checkboxV"+idProducto).attr('checked', true);  
+                     //$("#checkbox"+idProducto).css({"display": "block"});
+                     //abre todos los checkbox
+                     $("input:checkbox").each(function() {
+                        $(this).css({"display": "block"});
+                   });
+                  
+                   //desaparece el boton borrar
+                   $( "button[id^=formBorrar]" ).each(function() {
+                    $(this).css({"display": "none"});
+    
+                });
+                   //aparece un div
+                   $("#borrar").css({"display": "block"});
+    
+                   //ajax para coger los nombre de los productos que esta en checkbox a true
+                   $.ajax({
+                    type: "GET",
+                    url: "http://localhost/proyectofinal/proyectoThinder/web/app_dev.php/producto/check",
+                    dataType: "json",
+                    data: {idProducto : idProducto}
+                }).done  (function(response) 
+                      {
+                          
+                          $("#nombre").append('<p>'+response[0].nombre+'</p>');
+                         
+        
+                      } )
+        
+                      .fail  (function(response) 
+                      {
+                          
+                          
+                        console.log(JSON.stringify(response));
+                      }
+        
+                    );
+                });
+
+                $( "button[id^=formBorraU]" ).click(function() {
+                    
+                         
+                        var oID = $(this).attr("id");
+                        var regex = /(\d+)/g;
+                        var idUsuario=oID.match(regex);
+                       
+                         //checkea al producto que le ha dado borrar
+                         $("#checkboxU"+idUsuario).attr('checked', true);  
+                         //$("#checkbox"+idProducto).css({"display": "block"});
+                         //abre todos los checkbox
+                         $("input:checkbox").each(function() {
+                            $(this).css({"display": "block"});
+                       });
+                      
+                       //desaparece el boton borrar
+                       $( "button[id^=formBorrar]" ).each(function() {
+                        $(this).css({"display": "none"});
+        
+                    });
+                       //aparece un div
+                       $("#borrar").css({"display": "block"});
+        
+                       //ajax para coger los nombre de los productos que esta en checkbox a true
+                       $.ajax({
+                        type: "GET",
+                        url: "http://localhost/proyectofinal/proyectoThinder/web/app_dev.php/usuarioR/check",
+                        dataType: "json",
+                        data: {idUsuario : idUsuario}
+                    }).done  (function(response) 
+                          {
+                              
+                              $("#nombre").append('<p>'+response[0].nombre+'</p>');
+                             
+            
+                          } )
+            
+                          .fail  (function(response) 
+                          {
+                              
+                              
+                            console.log(JSON.stringify(response));
+                          }
+            
+                        );
+                    });
            
             
             //al hacer click a borrar productos del div generado
@@ -317,7 +478,7 @@
                 $('span').children('p').each(function(){
                     array.push($(this).text());
                 });
-                alert(array.length);
+               
                 
                 
                 var objeto={};
@@ -357,7 +518,7 @@
     
                   .fail  (function(response) 
                   {
-                      alert("entra");
+                    
                       location.reload();
                       
                     console.log(JSON.stringify(response));
@@ -381,10 +542,10 @@
         $( ".container_cuatro" ).hide();
         $( ".container_cinco" ).hide();
         $( ".container_seis" ).hide();
-
+        $( ".formularioEdicionPro" ).hide();
     }
     function abrirDiv2(){
-        alert("hola??");
+       
         $( ".container_uno" ).hide();
         $( ".container_cinco" ).hide();
         $( ".container_seis" ).hide();
@@ -440,7 +601,7 @@
         var nuevaCadena =  searchText.trim();
         
        
-        //alert(nuevaCadena); 
+         
 
         $.ajax({
             type: "GET",
@@ -449,8 +610,7 @@
             data: {nuevaCadena : nuevaCadena}
         }).done  (function(response) 
               {
-                 // alert("correcto");
-                //alert(response[0].idproductos);
+                
                 //pone todos los div ocultos
                 $('div[class ^= producto]').hide();
                 //busca un div en concreto cogiendo el nombre de un clase
@@ -474,7 +634,7 @@
 
               .fail  (function(response) 
               {
-                  alert("entra");
+                 
                   
                 console.log(JSON.stringify(response));
               }
@@ -516,14 +676,14 @@
 
     $(document).ready(function(){
         $("select[name=categoria]").change(function(){
-                alert($('select[name=categoria]').val());
+             
                 var URLactual = window.location;
                
                 if(URLactual=="http://localhost/proyectofinal/proyectoThinder/web/app_dev.php/catServ"){
             
                 //$('input[name=valor1]').val($(this).val());
                 //cogemose el texto de las opciones 
-                //alert($('#categoriasServ option:selected').html());
+              
                 //hacemos el ajax
                 //cogemos la opcion que va a se rcomparado con id e categorias
                 var categoriaSeleccionada=$('select[name=categoria]').val();
@@ -535,8 +695,7 @@
                     data: {categoriaSeleccionada : categoriaSeleccionada}
                 }).done  (function(response) 
                       {
-                         // alert("correcto");
-                        //alert(response[0].idproductos);
+                         
                         //pone todos los div ocultos
                         
                         $('div[class ^= producto]').hide();
@@ -555,7 +714,7 @@
         
                       .fail  (function(response) 
                       {
-                          alert("entra");
+                        
                           
                         console.log(JSON.stringify(response));
                       }
@@ -575,12 +734,11 @@
             $("input[id^=enviarMensaje]").click(function(){
                  //valor del input
                  searchText = $("input#mensaje").val();
-                //alert(searchText);
+             
                 //obtener los valores numéricos del string
                 var oID = $(this).attr("id");
                 var regex = /(\d+)/g;
                 var idProducto=oID.match(regex);
-                alert(idProducto);
                 console.log(idProducto[0]);
                 var objeto={};
                
@@ -598,7 +756,7 @@
                     contentType: "application/json; charset=utf-8",
                 }).done  (function(response) 
                       {
-                        alert("geniaaal");
+                 
                         console.log(response);
                         //eliminos todos los divs de datos-chat
                         $("#datos-chat").empty("div");
@@ -618,7 +776,7 @@
         
                       .fail  (function(response) 
                       {
-                          alert("entra");
+                          
                           
                         console.log(JSON.stringify(response));
                       }
@@ -644,7 +802,7 @@
 
             //al hacer click al boton editar de la tabla uusarios 
      $( "button[id^=EditarU]" ).click(function() {
-        alert("sdfsfdsfd");        
+             
             var oID = $(this).attr("id");
             var regex = /(\d+)/g;
             var idUsuario=oID.match(regex);
@@ -675,7 +833,7 @@
     
                   .fail  (function(response) 
                   {
-                      alert("entra");
+                   
                       
                     console.log(JSON.stringify(response));
                   }
@@ -692,7 +850,7 @@
 
                  //al hacer click al boton editar de la tabla uusarios 
      $( "button[id^=EditarC]" ).click(function() {
-        alert("sdfsfdsfd");        
+            
             var oID = $(this).attr("id");
             var regex = /(\d+)/g;
             var idUsuario=oID.match(regex);
@@ -718,7 +876,7 @@
     
                   .fail  (function(response) 
                   {
-                      alert("entra");
+                      
                       
                     console.log(JSON.stringify(response));
                   }
@@ -737,9 +895,9 @@
                 var oID = $(this).attr("id");
                 var regex = /(\d+)/g;
                 var idUsuario=oID.match(regex);
-                alert(idUsuario);
+                
                  //checkea al producto que le ha dado borrar
-                 $("#checkbox"+idUsuario).attr('checked', true);  
+                 $("#checkboxU"+idUsuario).attr('checked', true);  
                  //$("#checkbox"+idProducto).css({"display": "block"});
                  //abre todos los checkbox
                  $("input:checkbox").each(function() {
@@ -766,8 +924,8 @@
                 data: {idUsuario : idUsuario}
             }).done  (function(response) 
                   {
-                      alert("hola");
-                     // alert("entra en ajax");
+                      
+                     
                       $("#nombreC").append('<p>'+response[0].nombre+'</p>');
                      
     
@@ -775,7 +933,7 @@
     
                   .fail  (function(response) 
                   {
-                      alert("entra");
+                      
                       
                     console.log(JSON.stringify(response));
                   }
@@ -790,7 +948,7 @@
                     var oID = $(this).attr("id");
                     var regex = /(\d+)/g;
                     var idUsuario=oID.match(regex);
-                    alert(idUsuario);
+                    
                      //checkea al producto que le ha dado borrar
                      $("#checkboxC"+idUsuario).attr('checked', true);  
                      //$("#checkbox"+idProducto).css({"display": "block"});
@@ -819,7 +977,7 @@
                     data: {idUsuario : idUsuario}
                 }).done  (function(response) 
                       {
-                         // alert("entra en ajax");
+                        
                           $("#nombreC").append('<p>'+response[0].nombre+'</p>');
                          
         
@@ -827,7 +985,7 @@
         
                       .fail  (function(response) 
                       {
-                          alert("entra");
+                         
                           
                         console.log(JSON.stringify(response));
                       }
@@ -844,7 +1002,7 @@
                 $('span').children('p').each(function(){
                     array.push($(this).text());
                 });
-                alert(array.length);
+                
                 
                 
                 var objeto={};
@@ -874,6 +1032,7 @@
             }).done  (function(response) 
                   {
                     $("#borrar").css({"display": "none"});
+                    location.reload();
                        
                      
                      
@@ -883,7 +1042,8 @@
     
                   .fail  (function(response) 
                   {
-                      alert("entra");
+                    location.reload();
+                      
                       
                     console.log(JSON.stringify(response));
                   }
@@ -905,7 +1065,7 @@
                 $('span').children('p').each(function(){
                     array.push($(this).text());
                 });
-                alert(array.length);
+                
                 
                 
                 var objeto={};
@@ -935,6 +1095,7 @@
             }).done  (function(response) 
                   {
                     $("#borrar").css({"display": "none"});
+                    location.reload();
                        
                      
                      
@@ -944,7 +1105,8 @@
     
                   .fail  (function(response) 
                   {
-                      alert("entra");
+                    location.reload();
+                    
                       
                     console.log(JSON.stringify(response));
                   }
